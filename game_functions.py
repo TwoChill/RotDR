@@ -1,14 +1,12 @@
-
 import os
-import sys
-import time
 import random
+import time
 import player_quests
 import player_location
+import typing
 
-usrName = ''
+
 usrGendr = []
-location = 'beginning'
 usrGendr_boy = ["he", "his", "him", "his"]
 usrGendr_girl = ["she", "hers", "her", "her"]
 
@@ -18,10 +16,10 @@ def enter_command(usrName, usrGendr, location, ):
     usr_command = str(input(':> ')).upper()
 
     if usr_command == 'LOOK':
-        look(usrName, usrGendr, location)
+        player_location.look(usrName, usrGendr, location)
 
     elif usr_command == 'DIG':
-        dig(usrName, usrGendr, location)
+        player_location.dig(usrName, usrGendr, location)
 
     elif usr_command == 'MAP':
         player_location.land_map(usrName, usrGendr, location)
@@ -35,45 +33,46 @@ def enter_command(usrName, usrGendr, location, ):
 
 def player_info(usrName, usrGendr, location):
 
-    print('''
+    text = '''
 You are about to embark on a journey of the imagination.
 Full of everything your imagination can fill ...
 
 .. With a helping hand offcourse ..
 
 .... So let's create a character ....
-''')
+'''
+    typing.text_005sec(text)
 
-    usrGendr = str(input("\nWill you be playing as a Boy or a Girl?\n:> ")).upper()
+    usrGendr = str(input("\n\nWill you be playing as a Boy or a Girl?\n:> ")).upper()
 
     if usrGendr == 'BOY':
-        print('\nA Boy has been created!\n\n')
+        text = '\n\nA Boy has been created!\n\n'
+        typing.text_005sec(text)
         usrGendr = usrGendr_boy
     elif usrGendr == 'GIRL':
-        print('\nA Girl has been created!\n\n')
+        text = '\n\nA Girl has been created!\n\n'
+        typing.text_005sec(text)
         usrGendr = usrGendr_girl
     else:
         randomnr = random.randint(1, 3)
 
         if randomnr == 1:
             usrGendr = 'BOY'
-            print("\nI think I'll make a boy for you.\n\n")
+            text = "\n\nI think I'll make a Boy for you.\n\n"
+            typing.text_005sec(text)
             usrGendr = usrGendr_boy
         else:
             usrGendr == 'GIRL'
-            print("\nI think I'll make a girl for you.\n\n")
+            text = "\n\nI think I'll make a Girl for you.\n\n"
+            typing.text_005sec(text)
             usrGendr = usrGendr_girl
 
-    usrName = str(input("Now choose your characters Name:\n:> ")).capitalize()
+    usrName = str(input("\nNow choose your characters Name:\n:> ")).capitalize()
 
     while True:
-        if " " in usrName:
-            print('\nI just need one strong name...\n')
-            usrName = str(
-                input("\nChoose your characters name:\n:> ")).capitalize()
-            continue
-        elif usrName == "":
-            print('\nI just need one strong name...\n')
+        if usrName == "":
+            text = '\nI just need one strong name...\n'
+            typing.text_005sec(text)
             usrName = str(
                 input("\nChoose your characters name:\n:> ")).capitalize()
             continue
@@ -83,6 +82,8 @@ Full of everything your imagination can fill ...
             if answer == "":
                 continue
             elif (answer == 'Y') or (answer == 'YES'):
+                time.sleep(1)
+                os.system('clear')
                 player_quests.tutorial_quest(usrName, usrGendr, location)
             elif (answer == 'N') or (answer == 'NO'):
                 usrName = str(
@@ -120,9 +121,9 @@ def start(usrName, usrGendr, location):
         print('\nI didn\'t get that!\n')
 
 
-def help(location):
+def help(usrName, location):
     if location == "beginning":
-        print('\n\n############################')
+        print('\n############################')
         print('#         - Help -         #')
         print('############################\n')
         print('- Type your commands to do them.\n')
@@ -132,26 +133,26 @@ def help(location):
         print('- Good luck and have fun!.')
         print('\n############################')
 
-        str(input('\n\nPress ENTER to continue\n:>'))
+        str(input('\nOr press ENTER to continue\n\n:>'))
 
         os.system('clear')
         start(usrName, usrGendr, location)
 
-    else:       # elif location is longer ... ?:
-        print('\n\n############################')
-        print('#         - Help -         #')
-        print('############################\n')
-        print('- Type your commands to do them.\n')
-        print('- Use "look" to inspect area.')
-        print('- Use "dig" to investigate area.')
-        print('- Use "map" to see area.\n')
-        print('- Good luck and have fun!.')
-        print('\n############################')
-        while True:
-            if usr_answer == "":
-                game_functions.start(usrName, usrGendr, location)
-            else:
-                usr_answer = str(input('\nJust ENTER or the BACKSPACE is enough.\n:>'))
+    # else:       # This else statement should hold the full help sentences:
+    #     print('\n\n############################')
+    #     print('#         - Help -         #')
+    #     print('############################\n')
+    #     print('- Type your commands to do them.\n')
+    #     print('- Use "look" to inspect area.')
+    #     print('- Use "dig" to investigate area.')
+    #     print('- Use "map" to see area.\n')
+    #     print('- Good luck and have fun!.')
+    #     print('\n############################')
+    #     while True:
+    #         if usr_answer == "":
+    #             game_functions.start(usrName, usrGendr, location)
+    #         else:
+    #             usr_answer = str(input('\nJust ENTER or the BACKSPACE is enough.\n:>'))
 
 
 def intro_setting(usrName, location):
@@ -174,19 +175,9 @@ def intro_setting(usrName, location):
     return intro_setting
 
 
-def typing_text(text):
-    typing_text = text
-
-    for l in typing_text:
-        sys.stdout.write(l)
-        sys.stdout.flush()
-        time.sleep(0.01)
-
-    return typing_text
-
-
 def quit():
-    print('\nThank you for playing Rise of the Dragon Rider!\n')
+    text = '\nThank you for playing Rise of the Dragon Rider!\n'
+    typing.text_005sec(text)
     exit(0)
 
 # def game_over():

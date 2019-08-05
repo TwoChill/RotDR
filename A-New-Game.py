@@ -1,11 +1,9 @@
 import game_functions
 
-
-mentorName = 'mentor'
+usrName = ''
 location = 'beginning'
 usrName = ''
 usrGendr = []
-
 
 game_functions.start(usrName, usrGendr, location)
 

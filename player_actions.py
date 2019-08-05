@@ -1,29 +1,32 @@
+import player_location
+
+
 def look(usrName, usrGendr, location):
     print("look menu")
     if location == 'garden':
-        garden(usrName, usrGendr, location)
+        player_location.garden(usrName, usrGendr, location)
     elif location == 'Home':
-        home(usrName, usrGendr, location)
+        player_location.home(usrName, usrGendr, location)
     elif location == 'North':
-        north(usrName, usrGendr, location)
+        player_location.north(usrName, usrGendr, location)
     elif location == 'North_West':
-        north_west(usrName, usrGendr, location)
+        player_location.north_west(usrName, usrGendr, location)
     elif location == 'West':
-        west(usrName, usrGendr, location)
+        player_location.west(usrName, usrGendr, location)
     elif location == 'South_West':
-        south_west(usrName, usrGendr, location)
+        player_location.south_west(usrName, usrGendr, location)
     elif location == 'South':
-        south(usrName, usrGendr, location)
+        player_location.south(usrName, usrGendr, location)
     elif location == 'South_East':
-        south_east(usrName, usrGendr, location)
+        player_location.south_east(usrName, usrGendr, location)
     elif location == 'East':
-        east(usrName, usrGendr, location)
+        player_location.east(usrName, usrGendr, location)
     elif location == 'DarkLands':
-        darklands(usrName, usrGendr, location)
+        player_location.darklands(usrName, usrGendr, location)
     elif location == 'Wildland':
-        wildlands(usrName, usrGendr, location)
+        player_location.wildlands(usrName, usrGendr, location)
     elif location == 'Tower':
-        tower(usrName, usrGendr, location)
+        player_location.tower(usrName, usrGendr, location)
 
 
 def dig(usrName, usrGendr, location):
@@ -54,4 +57,5 @@ def spellbook():
     # def inventory():
     #     # usrname list of items with amout
     #     # this can be used to append to shoptrader and other quest dudes
-    #     # so prorgram knows what to have and not?
+    #     # so prorgram knows what to have and not
+    print('Spellbook')
