@@ -1,6 +1,7 @@
 # Rise of the Dragon Rider
 
-Rise of the Dragon Rider is a mini text base game
+Rise of the Dragon Rider is a mini text base game.
+
 (Still Under Construction)
 
 
