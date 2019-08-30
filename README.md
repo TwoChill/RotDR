@@ -8,8 +8,9 @@ Rise of the Dragon Rider is a mini text base game.
 
 
 ## Getting Started
+Run this command ```git clone ... .git```
 
-To start the game: Run A-New-Game.py
+To start the game: Run ```A-New-Game.py```
 
 
 ## Authors
