@@ -15,5 +15,4 @@ Now run ```A-New-Game.py``` in the ```Rise-of-the-Dragon-Rider.git``` folder you
 
 ## Authors
 
-* **Michael Leslie de France** - *Initial work* - [MdeFrance](https://github.com/MdeFrance)
-                                                - [MdeFrance](htpps://github.com/TwoChill)
+* **Michael Leslie de France** - *Initial work* - [MdeFrance](https://github.com/MdeFrance) / [TwoChill](https://github.com/TwoChill)
