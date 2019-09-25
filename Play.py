@@ -1,21 +1,39 @@
-# Change to from classes import <<whole file>> // menu or characters
-from functions import gf  # Game Functions
+# Play the game
 
-from classes.menus import Start
-from classes.usr_options import Enter_command
+import os
+import time
 
-gf.clear()
+from functions import gfunc                     # Game Functions
+from classes.menus import Menus                 # Game Menu's
+from classes.typing import Typing               # Display's typing text
+# Prints introductions per location
+from classes.locations import Location
+from classes.characters import Person, Hero
 
-location = 'beginning'
+tspeed = 0.05
+try:
+    os.system('clear')
 
-print('\n############################')
-print('# Rise of the Dragon Rider #')
-print('############################\n')
-print('          - Play -          ')
-print('          - Help -          ')
-print('          - Quit -          ')
-print('\n          Made by:          ')
-print('       M.L. de France       ')
-print('\n############################\n')
+    location = 'beginning'
 
-Enter_command(location)
+    # Gets and prints the game logo.
+    Game_Name = gfunc.game_name()
+    Typing(Game_Name, 0.001)
+    time.sleep(2)
+    os.system('clear')
+
+    # Gets the start menu.
+    Start_Game = Menus(location)
+    Start_Game.start_menu(location)
+
+    location = 'let_there_be_light'
+
+    usrName = ''
+    usrGendr = ''
+
+    # Create an instance of Hero with user input
+    player = Hero(usrName, usrGendr, location)
+    player.creation()
+
+except KeyboardInterrupt:
+    gfunc.quit()
