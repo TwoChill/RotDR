@@ -10,7 +10,17 @@ from classes.typing import Typing               # Display's typing text
 from classes.locations import Location
 from classes.characters import Hero, Person
 
-tspeed = 0.005
+tspeed = 0.05
+
+usr_answer = ('yes', 'y', 'no', 'n')
+
+# This fAI (fake AI) list are responses given when the user types an unknow command. (Can be expanded upon.)
+fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
+       "Nope, I didn't get that!", '.......... -_-',
+       'We all have brainfarts sometimes ....', "I don't think '{}' is the answer..",
+       'Oeps, brainfart! Again please!', "That's just not correct.",
+       "I'm sorry, but I don't know what '{}' means.", "That's what she! said.",
+       ".. 'help' could be usefull .."]
 
 
 def comming_soon():
@@ -50,6 +60,7 @@ def enter_command(location):
         usr_command = str(input(':> ')).lower()
 
         if usr_command == 'look' and location != 'beginning':
+            # Class Locations. Per location 1. Intro
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
@@ -83,13 +94,6 @@ def enter_command(location):
 
 def usr_type_error(location, usr_command):
     '''Random fake-AI responses for commando errors of the user'''
-
-    fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
-           "Nope, I didn't get that!", '.......... -_-',
-           'We all have brainfarts sometimes ....', "I don't think '{}' is the answer..",
-           'Oeps, brainfart! Again please!', "That's just not correct.",
-           "I'm sorry, but I don't know what '{}' means.", "That's what she! said.",
-           ".. 'help' could be usefull .."]
 
     randomnr = random.randrange(0, len(fAI))
 
@@ -137,20 +141,20 @@ def matrix():
         line.append(symbols[x])
         counter += 1
 
-    for i in range(100):
+    for i in range(150):
         if counter % 5 == 0:
             r_symbols = [random.randint(0, 117)for x in range(10)]
             for i in r_symbols:
                 line[i] = symbols[random.randint(0, 3)]
         print(*line)
-        time.sleep(0.05)
+        time.sleep(0.03)
         counter += 1
-    
-    space = '\n' *65
-    Typing(space, 0.05)
-    time.sleep(5)
 
-    comming_soon()
+    space = '\n' * 40
+    Typing(tspeed, space)
+    os.system('clear')
+
+    return None
 
 
 def quit():
@@ -160,9 +164,9 @@ def quit():
 
     text = '''
                             Thank you for playing!'''
-    Typing(text, tspeed)
+    Typing(tspeed, text)
 
     Game_Name = game_name()
-    Typing(Game_Name, 0.001)
+    Typing(tspeed, Game_Name)
 
     sys.exit()
