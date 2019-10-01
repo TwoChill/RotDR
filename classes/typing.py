@@ -19,11 +19,17 @@ class bcolors:
 class Typing(bcolors):
     ''' Game txt is being typed on screen. CTRL to increase speed '''
 
-    def __init__(self, text, speed):
+    def __init__(self, speed, text=None):
         self.text = text
+
+        if text is None:
+            self.text == []
+        else:
+            self.text = text
         self.speed = speed
         self.bcolors = bcolors
 
+        text = ''.join(self.text)
         for l in text:
             if keyboard.is_pressed('ctrl'):
                 time.sleep(0.01)
