@@ -4,8 +4,10 @@ import os
 import time
 from functions import gfunc                     # Game Functions
 from classes.typing import Typing               # Display's typing text
+from classes.characters import Hero, Person
 
 speed = 0.05
+
 # Every first time, there will be a intro text.
 # The Intro class should be a methode instead of a parent class
 
