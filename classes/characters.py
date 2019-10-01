@@ -7,12 +7,17 @@ import random
 from functions import gfunc                     # Game Functions
 from classes.menus import Menus                 # Game Menu's
 from classes.typing import Typing               # Display's typing text
-from classes.locations import Location
+
+# usrName = ''
+# usrGendr = ''
+
+usrGendr = []
+usr_answer = ('yes', 'y', 'no', 'n')
 
 tspeed = 0.05
 
 
-class Person():
+class Person(object):
     ''' Holds information and functions that each 'Person' has and can/might do'''
 
     def __init__(self, hp, mp, atk, df, magic, location):
@@ -83,80 +88,73 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
     '''This class holds information about the player's character'''
 
     def __init__(self, usrName, usrGendr, location):
-        self.usrName = usrName
-        self.usrGendr = usrGendr
-        self.backpack = {}  # Heres going to Inventory and stuff like that
-        self.usr_answer = ('yes', 'y', 'no', 'n')
+        #super().__init__(hp, mp, atk, df, magic, location)
+        self.usrName = ''
+        self.usrGendr = ''
+        self.backpack = {}  # Here's going to Inventory and stuff like that
+        self.inventory = ''  # gfunc.get_inventory
 
-    def creation(self):
+    def character_creation(self):
         ''' Creates character name and gender.
         Txt in the game will adapt to the characters gender. '''
 
-        usrGendr = []
-        usrGendr_boy = ("he", "his", "him", "his")
-        usrGendr_girl = ("she", "hers", "her", "her")
-        usr_answer = ('yes', 'y', 'no', 'n')
+        usrGendr_boy = ("he", "his", "him", "his",
+                        "He", "His", "Him", "His")
+        usrGendr_girl = ("she", "hers", "her", "her",
+                         "She", "Hers", "Her", "Her")
 
-        # fAI (fake AI) is a list to 'help' the usr to choose a character name.
-        fAI = ['\n\t\tJust think of one strong name...\n\n',
-               "\n\t\tIt's just a cleaver combination of A's -> Z's ..\n\n",
-               "\n\t\t'Zolar'?, 'Matt'?, I'm just trying to help ... \n\n",
-               "\n\t\tThere must be something you can think of..\n\n",
-               "\n\t\tYes .. It's hard.. and forever. Sooo, take your time..\n\n",
-               "\n\t\t..... -_-", "\n\t\tI have faith you'll succeed on your next try.. "]
+        # This fAI (fake AI) list is seperate because of the display tabs.
+        fAI_CC = ['\n\t\tJust think of one strong name...\n\n',
+                  "\n\t\tIt's just a cleaver combination of A's -> Z's ..\n\n",
+                  "\n\t\t'Zolar'?, 'Matt'?, I'm just trying to help ... \n\n",
+                  "\n\t\tThere must be something you can think of..\n\n",
+                  "\n\t\tYes .. It's hard.. and forever. Sooo, take your time..\n\n",
+                  "\n\t\t..... -_-", "\n\t\tI have faith you'll succeed on your next try.. ",
+                  "\n\t\tIt's a thing now-a-day's.. Just pick on for the naritave of the game ;)\n\n"]
 
         usrGendr = str(
             input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
 
-        if usrGendr == 'boy':
-            text = '\n\n\t\tA Boy has been created!\n\n'
-            Typing(text, tspeed)
+        while True:
 
-            time.sleep(3)
-            os.system('clear')
-
-            usrGendr = usrGendr_boy
-        elif usrGendr == 'girl':
-            text = '\n\n\t\tA Girl has been created!\n\n'
-            Typing(text, tspeed)
-
-            time.sleep(3)
-            os.system('clear')
-
-            usrGendr = usrGendr_girl
-        else:
-            # A random gender is choosen.
-            randomnr = random.randint(1, 3)
-
-            if randomnr == 1:
-                usrGendr = 'boy'
-                text = "\n\n\t\tA Boy has been choosen for you.\n\n"
-                Typing(text, tspeed)
+            if usrGendr == 'boy':
+                text = '\n\n\t\tA Boy has been created!\n\n'
+                Typing(tspeed, text)
 
                 time.sleep(3)
                 os.system('clear')
 
                 usrGendr = usrGendr_boy
-            else:
-                usrGendr == 'girl'
-                text = "\n\n\t\tA Girl has been choosen for you.\n\n"
-                Typing(text, tspeed)
+            elif usrGendr == 'girl':
+                text = '\n\n\t\tA Girl has been created!\n\n'
+                Typing(tspeed, text)
 
                 time.sleep(3)
                 os.system('clear')
 
                 usrGendr = usrGendr_girl
+            else:
+                randomnr = random.randint(0, len(fAI_CC) - 1)
+                Typing(tspeed, fAI_CC[randomnr])
+                time.sleep(3)
+                os.system('clear')
+
+                usrGendr = str(
+                    input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
+                continue
+            break
 
         usrName = str(
-            input("\n\t\tNow choose your characters Name:\n\t\t:> ")).capitalize()
+            input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
 
         while True:
             # len(text) is used because the list above will grow.
-            randomnr = random.randint(0, (len(fAI) - 1))
+            randomnr = random.randint(0, (len(fAI_CC) - 1))
 
             if usrName == "":
-                Typing(fAI[randomnr], tspeed)
+                Typing(tspeed, fAI_CC[randomnr])
                 time.sleep(3)
+                os.system('clear')
 
                 usrName = str(
                     input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
@@ -165,27 +163,44 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 answer = str(
                     input((f'\n\t\tIs "{usrName}" correct? (Y/N):\n\t\t:> ')).lower())
 
-                if answer == "":
-                    
-                    Typing(fAI[randomnr], tspeed)
+                if '' == answer in usr_answer[2:]:
+
+                    Typing(tspeed, fAI_CC[randomnr])
                     time.sleep(3)
+                    os.system('clear')
 
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
                 elif answer in usr_answer[:2]:
-
                     os.system('clear')
-                    text = '\n\n\t\t{} has born!\n'
+                    text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
-                    Typing(text.format(usrName), 0.3)
-                    time.sleep(3)
-# !
+                    Typing(0.1, text.format(usrName))
+                    time.sleep(1)
+
                     gfunc.matrix()
                 else:
+                    os.system('clear')
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
             break
 
-        return usrName, usrGendr
+        self.usrName = usrName
+        self.usrGendr = usrGendr
+
+    def get_inventory(self):
+        '''Function to see what and how many items the player has'''
+
+        pass
+
+    def look(self):
+        '''The player can look around'''
+        # call class
+        pass
+
+
+class Enemy(Person):
+    # This class inherites all the metods and attributs from its parent class
+    pass
