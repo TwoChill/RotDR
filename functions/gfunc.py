@@ -10,7 +10,7 @@ from classes.typing import Typing               # Display's typing text
 from classes.locations import Location
 from classes.characters import Hero, Person
 
-tspeed = 0.05
+tspeed = 0.005
 
 usr_answer = ('yes', 'y', 'no', 'n')
 
@@ -24,7 +24,7 @@ fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
 
 
 def comming_soon():
-    time.sleep(1)
+    time.sleep(2)
     print('\n\t\t\t!! COMMING SOON !!\n')
     time.sleep(4)
     quit()
