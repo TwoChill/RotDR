@@ -33,7 +33,7 @@ class Menus(object):
                                M.L. de France       
                         ############################
         '''
-        Typing(Welcome_Menu, tspeed)
+        Typing(tspeed, Welcome_Menu)
         gfunc.enter_command(location)
 
     def get_help(self, location):
@@ -65,7 +65,7 @@ class Menus(object):
                         - Good luck and have fun!! -
                         ############################
         '''
-        Typing(Help_Menu, tspeed)
+        Typing(tspeed, Help_Menu)
         gfunc.enter_command(location)
 
 
