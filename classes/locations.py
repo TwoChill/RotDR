@@ -32,6 +32,6 @@ class Location(object):
                 .. With a helping  hand offcourse ..
 
                .... So let's create a character! ....'''
-            Typing(text, 0.05)
+            Typing(0.05, text)
             time.sleep(3)
             os.system('clear')
