@@ -18,14 +18,14 @@ try:
 
     # # Gets and prints the game logo.
 
-    # Game_Name = gfunc.game_name()
-    # Typing(Game_Name, 0.001)
-    # time.sleep(2)
-    # os.system('clear')
+    Game_Name = gfunc.game_name()
+    Typing(0.001, Game_Name)
+    time.sleep(2)
+    os.system('clear')
 
     # # Gets the start menu.
-    # Start_Game = Menus(location)
-    # Start_Game.start_menu(location)
+    Start_Game = Menus(location)
+    Start_Game.start_menu(location)
 
     # Create an instance of Hero with user input.
     usrName = ''
@@ -49,17 +49,19 @@ that carries a sweet scent of primrose roses.
 Peacefull..
 
 
-
 Afther a few moments,
 {player.usrName} hears the sound of a door opening.
 {player.usrGendr[4]} looks up and sees {player.usrGendr[3]} mentor standing in a doorway.
 '''
     Typing(tspeed, text)
-
     time.sleep(2)
+
     text = bcolors.FAIL + bcolors.BOLD + bcolors.UNDERLINE + \
-        "\n\n# Tutorial: LOOK #" + bcolors.ENDC
-    Typing(tspeed, text)
+        "\n# Tutorial: Use command 'LOOK' #" + bcolors.ENDC
+    text2 = bcolors.WARNING + bcolors.UNDERLINE + \
+        "\nType 'look' to look around your surroundings" + bcolors.ENDC
+    Typing(tspeed, [text, text2])
+
     input(bcolors.FAIL + ':> ' + bcolors.ENDC)
 
     text = f'''
@@ -87,10 +89,10 @@ A feeling of familiarity came over {player.usrName} as {player.usrGendr[0]} sees
             continue
         else:
             answer = str(
-                input((f'\nIs "{mentorName}" correct? (Y/N):\n:> ')).lower())
+                input((f'\n"{mentorName}"? That sounds about right.. (Y/N):\n:> ')).lower())
             if answer == "":
                 continue
-            elif answer in gfunc.usr_answer[:1]:
+            elif answer.lower() in gfunc.usr_answer[:2]:
                 break
             else:
                 mentorName = str(
