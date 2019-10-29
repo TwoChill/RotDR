@@ -15,15 +15,15 @@ try:
 
     location = 'beginning'
 
-    # # Gets and prints the game logo.
-    # Game_Name = engine.game_name()
-    # base.Typing(0.001, Game_Name)
-    # time.sleep(2)
-    # os.system('clear')
+    # Gets and prints the game logo.
+    Game_Name = engine.game_name()
+    base.Typing(0.001, Game_Name)
+    time.sleep(2)
+    os.system('clear')
 
-    # # Gets the start menu.
-    # Start_Game = base.Menus(location)
-    # Start_Game.start_menu(location)
+    # Gets the start menu.
+    Start_Game = base.Menus(location)
+    Start_Game.start_menu(location)
 
     # Create an instance of Hero with user input.
     usrName = ''
