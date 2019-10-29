@@ -1,14 +1,11 @@
-# Game Functions
-
 import os
 import time
 import sys
 import random
+import base
 
-from classes.menus import Menus                 # Game Menu's
-from classes.typing import Typing               # Display's typing text
-from classes.locations import Location
-from classes.characters import Hero, Person
+print('Engine module Imported!')
+time.sleep(3)
 
 tspeed = 0.005
 
@@ -37,18 +34,18 @@ def enter_command(location):
         usr_command = str(input('\t\t\t:> ')).lower()
 
         if usr_command == 'play':
-            Start_Game = Location(location)
+            Start_Game = base.Location(location)
             Start_Game.get_intro(location)
 
         elif usr_command == 'help':
-            Help = Menus(location)
+            Help = base.Menus(location)
             Help.get_help(location)
 
         elif usr_command == 'load':
             comming_soon()
 
         elif usr_command == 'back':
-            Restart_Game = Menus(location)
+            Restart_Game = base.Menus(location)
             Restart_Game.start_menu(location)
 
         elif usr_command == 'quit':
@@ -108,8 +105,7 @@ def usr_type_error(location, usr_command):
 
 def game_name():
 
-    game_name = '''
-                                _____   _                                
+    game_name = '''             _____   _                                
                                |  __ \ (_)                               
                                | |__) | _  ___   ___                     
                                |  _  / | |/ __| / _ \                    
@@ -151,7 +147,7 @@ def matrix():
         counter += 1
 
     space = '\n' * 40
-    Typing(tspeed, space)
+    base.Typing(tspeed, space)
     os.system('clear')
 
     return None
@@ -164,9 +160,9 @@ def quit():
 
     text = '''
                             Thank you for playing!'''
-    Typing(tspeed, text)
+    base.Typing(tspeed, text)
 
     Game_Name = game_name()
-    Typing(tspeed, Game_Name)
+    base.Typing(tspeed, Game_Name)
 
     sys.exit()
