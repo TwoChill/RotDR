@@ -4,8 +4,6 @@ import sys
 import random
 import base
 
-print('Engine module Imported!')
-time.sleep(3)
 
 tspeed = 0.005
 
@@ -25,6 +23,41 @@ def comming_soon():
     print('\n\t\t\t!! COMMING SOON !!\n')
     time.sleep(4)
     quit()
+
+
+def cmd_tutorial(cmd):
+    ''' Prints out an explanation on how to use commands '''
+    text = base.bcolors.FAIL + base.bcolors.BOLD + base.bcolors.UNDERLINE + \
+        "\n# Tutorial: Use command '" + cmd.upper() + "' #" + base.bcolors.ENDC
+
+    if cmd == 'look':
+        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
+            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
+            base.bcolors.WARNING + "to look around your surroundings.\n" + base.bcolors.ENDC
+
+    if cmd == 'map':
+        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
+            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
+            base.bcolors.WARNING + "to see were you are.\n" + base.bcolors.ENDC
+
+    if cmd == 'dig':
+        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
+            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
+            base.bcolors.WARNING + "to open a small black portal.\n" + base.bcolors.ENDC
+
+    base.Typing(tspeed, [text, text1])
+
+
+def obtains(itm, usrName):
+    ''' When HERO obtains something, a text will be displayed '''
+    line = '=' * (len(usrName) + 11 + len(itm))
+
+    text = base.bcolors.FAIL + base.bcolors.BOLD + \
+        f'''\n\t{line}\n\t{usrName.capitalize()} obtains {itm}!\n\t{line}\n''' + \
+        base.bcolors.ENDC
+
+    base.Typing(tspeed, text)
+    time.sleep(3)
 
 
 def enter_command(location):
@@ -104,8 +137,10 @@ def usr_type_error(location, usr_command):
 
 
 def game_name():
+    ''' The gamename in TextART form. '''
 
-    game_name = '''             _____   _                                
+    game_name = '''
+                                _____   _                                
                                |  __ \ (_)                               
                                | |__) | _  ___   ___                     
                                |  _  / | |/ __| / _ \                    
@@ -120,8 +155,7 @@ def game_name():
  | |__| || |  | (_| || (_| || (_) || | | | | | \ \ | || (_| ||  __/| |   
  |_____/ |_|   \__,_| \__, | \___/ |_| |_| |_|  \_\|_| \__,_| \___||_|   
                        __/ |                                             
-                      |___/                                              
-'''
+                      |___/                                              '''
     return game_name
 
 
