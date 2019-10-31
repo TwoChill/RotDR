@@ -6,8 +6,6 @@ import base
 import engine
 
 
-time.sleep(3)
-
 tspeed = 0.05
 
 try:
