@@ -3,12 +3,8 @@ import time
 import sys
 import random
 import keyboard  # pip install keyboard
-
 import engine
 
-
-print('Base module Imported!')
-time.sleep(3)
 
 usr_answer = ('yes', 'y', 'no', 'n')
 usrGendr_boy = ("he", "his", "him", "his",
@@ -16,6 +12,7 @@ usrGendr_boy = ("he", "his", "him", "his",
 usrGendr_girl = ("she", "hers", "her", "her",
                  "She", "Hers", "Her", "Her")
 mentorName = ''
+
 tspeed = 0.05
 
 
@@ -90,15 +87,15 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
     '''This class holds information about the player's character'''
 
     def __init__(self, usrName, usrGendr, location):
-        #super().__init__(hp, mp, atk, df, magic)
+        # super().__init__(hp, mp, atk, df, magic)
         self.usrName = ''
         self.usrGendr = ''
 
         self.backpack = {}  # Here's going to Inventory and stuff like that
 
     def character_creation(self):
-        ''' Creates character name and gender.
-        Txt in the game will adapt to the characters gender. '''
+        ''' Creates Hero's name and gender.
+        Txt in the game will adapt to the Hero's gender. '''
 
         # This fAI (fake AI) list is seperate because of the display tabs.
         fAI_CC = ['\n\t\tJust think of one strong name...\n\n',
@@ -173,7 +170,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                     os.system('clear')
                     text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
-                    Typing(0.1, text.format(usrName))
+                    Typing(0.05, text.format(usrName))
                     time.sleep(1)
 
                     engine.matrix()
@@ -191,12 +188,11 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
     def get_backpack(self):
         '''Function to see what and how many items the player has'''
-
         pass
 
     def look(self):
         '''The player can look around'''
-        # call class
+        # call class or
         pass
 
 
@@ -232,6 +228,9 @@ class Mentor(Person):
                         input("\nChoose your mentor's name:\n:> ")).capitalize()
                     continue
             break
+
+        self.mentorName = mentorName
+
         return mentorName
 
 
@@ -282,19 +281,19 @@ class Menus(object):
         tspeed = 0.005
 
         Welcome_Menu = '''
-                        
+
                         ############################
                         #          Welcome         #
                         ############################
 
                                   - Play -
-                                  - Load -          
+                                  - Load -
                                   - Help -
-         
+
                                   - Quit -
-         
-                                  Made by:          
-                               M.L. de France       
+
+                                  Made by:
+                               M.L. de France
                         ############################
         '''
         Typing(tspeed, Welcome_Menu)
@@ -325,7 +324,7 @@ class Menus(object):
 
                                  - "back" -
 
-                      - Press "CTRL" to speed up txt -       
+                      - Press "CTRL" to speed up txt -
                         - Good luck and have fun!! -
                         ############################
         '''
@@ -335,13 +334,13 @@ class Menus(object):
 
 # class Spellbook:
 
-class Dig:
+class dig:
 
     def __init__(self, usrName, usrGendr, location):
         self.usrName = usrName
         self.usrGendr = usrGendr
         self.location = location
-        print('Dig Fucntionn')
+        print('dig Fucntionn')
 
 
 class Look:
@@ -398,7 +397,10 @@ class Quest(Hero):
     def __init__(self, usrName, usrGendr, location):
         super().__init__(usrName, usrGendr, location)
 
+    @classmethod
     def tutorial(self, usrName, usrGendr, location):
+
+        mentorName = ''
 
         text = f'''
 {usrName} slowly opens {usrGendr[3]} eyes from {usrGendr[3]} hammock.
@@ -422,16 +424,20 @@ Afther a few moments,
 
         text = bcolors.FAIL + bcolors.BOLD + bcolors.UNDERLINE + \
             "\n# Tutorial: Use command 'LOOK' #" + bcolors.ENDC
-        text2 = bcolors.WARNING + bcolors.UNDERLINE + \
-            "\nType 'look' to look around your surroundings" + bcolors.ENDC
-        Typing(tspeed, [text, text2])
+        text1 = bcolors.WARNING + bcolors.UNDERLINE + \
+            "\nType" + bcolors.FAIL + " 'look' " + \
+            bcolors.WARNING + "to look around your surroundings" + bcolors.ENDC
+
+        Typing(tspeed, [text, text1])
 
         input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+        os.system('clear')
 
         text = f'''
 {usrName} looks around at the {location}
 and sees a big tree inside a grass field
 surrounded by a man-made wooden fence.
+
 There's a wooden chop-block at the end of the grassfield
 next to a stands sturdy man-made wooden log.
 
@@ -440,15 +446,17 @@ A feeling of familiarity came over {usrName} as {usrGendr[0]} sees
 '''
         Typing(tspeed, text)
         time.sleep(3)
-        # @@@@@@
+
         mentor = Mentor(mentorName)
         mentorName = mentor.get_name(usrName, usrGendr)
-        # Make an instanse of class Person that is a Mentor. With metode get-name
+
+        time.sleep(3)
+        os.system('clear')
 
         text = f'''
-With a confuced face, {usrName}'s {mentorName} walks up to {usrGendr[2]}.
-He asks {usrName} to help him find a map that he burried
-somewhere around {location}.
+With a confuced face, {mentorName} walks up to {usrName}
+and he asks to help him find a map that he burried
+somewhere around this {location}.
 
 You decide to help {mentorName}.
 He places his hand on {usrName}'s forehead,
@@ -463,21 +471,60 @@ and a rainbow-colored thermic force shoots out of his hand ...
 
 A warm feeling came over {usrName}.
 '''
+        time.sleep(4)
+        Typing(tspeed, text)
 
-        text2 = bcolors.FAIL + bcolors.BOLD + f'''=================================
-{usrGendr[0].capitalize()} accuired the abillity to DIG!
-=================================''' + bcolors.ENDC
+        engine.obtains('DIG', usrName)
+        engine.cmd_tutorial('dig')
         time.sleep(3)
 
         text = f'''
 {mentorName} pukes from excaustion!
 But he looks happy...
-Probably beacuse you can help find his map now.
+Probably beacuse you can help find his map now.\n'''
+        time.sleep(2)
 
-(((( He tells you its not dig as in shit is under the floor
-but you can dig between dimentions.. )))))
+        text1 = f'''
+{usrName} puts {usrGendr[3]} hand on the ground..
+The same rainbow-colored thermic force
+shoots from {usrGendr[3]} arm through and out off his hand!\n'''
+        time.sleep(1)
+
+        text2 = f'''
+{usrName} somehow opens a small black portal
+with evaporating 1's and 0's around the edges.\n'''
+
+        text3 = f'''
+{usrName}'s hand went through the ground's dimension and {usrGendr[0]} felt something...\n'''
+        time.sleep(3)
+
+        text4 = f'''
+It was the map {mentorName} was looking for!'''
+        time.sleep(4)
+        os.system('clear')
+
+        text5 = f'''
+{usrName} turns around and gives the map to {usrGendr[3]} mentor.
+
+With relieve {mentorName} looks at the map
+and with a snap of his fingers the map vanishes .. !?!
+
+{mentorName} looks at {usrName} and asks {usrGendr[3]} to use the map ..
 '''
-        Typing(tspeed, text)
+        Typing(tspeed, [text, text1, text2, text3, text4, text5])
+        engine.obtains('MAP', usrName)
+        engine.cmd_tutorial('map')
+
+        answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+
+        while True:
+            if answer == 'map':
+                map = Map(location)
+                map.get_map(usrName, usrGendr, location, bool)
+            else:
+                answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+
+        input()
 
         engine.comming_soon()
 
@@ -492,3 +539,81 @@ but you can dig between dimentions.. )))))
 
     def quest4(self):
         pass
+
+
+class Map(object):
+    def __init__(self, location):
+        self.location = location
+
+    @staticmethod
+    def get_map(usrName, usrGendr, location, bool):
+        false = False
+        # Makes the map look empty
+        land_name = []
+
+        # except by conditions below
+        if ((location == 'Home' or location == 'Garden') and (Map.first_entered(location, bool) == True)):
+            land_name = ['     ', '           ', '    ', '           ', '     ',
+                         '           ', '    ', '         ', '         ', '     ', 'HOME']
+        # Displays same map if player goes to Garden more the once but hasn't been to other areas.
+        elif ((location == 'Home' or location == 'Garden') and (Map.first_entered(location, bool) == false)):
+            #        print('>>> bool is false =', bool)
+            land_name = ['     ', '           ', '    ', '           ', '     ',
+                         '           ', '    ', '         ', '         ', '     ', 'HOME']
+
+        map = f'''
+    {usrName} opens {usrGendr[3]} map! (in {location})
+                                        -----------
+                                        |           |
+                        -----------     |           |
+                        |           |  → |   {land_name[9]}   |
+                        |           |     -----------
+                        |   {land_name[0]}   |
+                        -----------
+                            ↓    ↑
+        -----------      -----------      -----------
+        |           |  ← |           |  ← |           |
+        |           |    |           |    |           |
+        |{land_name[1]}| →  | {land_name[7]} | →  | {land_name[8]} |
+        -----------      -----------      -----------
+        ↓    ↑           ↓    ↑           ↓    ↑
+        -----------      -----------      -----------
+        |           |  ← |           |  ← |           |
+        |           |    |           |    |           |
+        |    {land_name[2]}   | →  |    {land_name[10]}   | →  |    {land_name[6]}   |
+        -----------      -----------      -----------
+        ↓    ↑                            ↓    ↑
+        -----------      -----------      -----------
+        |           |  ← |           |  ← |           |
+        |           |    |           |    |           |
+        |{land_name[3]}| →  |   {land_name[4]}   | →  |{land_name[5]}|
+        -----------      -----------      -----------
+        '''
+
+        print(map)
+        input('Press ENTER to close the map :> ')
+        print(f'\n\n{usrName} closes {usrGendr[3]} map!\n\n')
+
+    @staticmethod
+    def first_entered(location, bool):
+
+        dic_first_entered = {
+            'Home': True,
+            'Garden': True,
+            'usrName_room': True,
+            'Wildland': True,
+            'North': True,
+            'North_West': True,
+            'West': True,
+            'South_West': True,
+            'South': True,
+            'South_East': True,
+            'East': True,
+            'DarkLands': True,
+        }
+        # Change the value of a location to false
+        if bool is False:
+            dic_first_entered[location] = False
+
+        # Returns the value of a location.
+        return dic_first_entered.get(location)
