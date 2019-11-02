@@ -4,6 +4,7 @@ import sys
 import random
 import base
 
+import platform
 
 tspeed = 0.005
 
@@ -18,7 +19,20 @@ fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
        ".. 'help' could be usefull .."]
 
 
+def sys_clear():
+    ''' Clears terminal screen for diffrent OS's '''
+    
+    if 'linux' in platform.platform().lower():
+        os.system('clear')
+    elif 'windows' in platform.platform().lower():
+        os.system('cls')
+    else:
+        print("Sorry, Your OS is not known to me yet.")
+
+
 def comming_soon():
+    ''' Displays 'COMMING SOON' message. Meaning the rest of the game hasn't been programmed yet '''
+    
     time.sleep(2)
     print('\n\t\t\t!! COMMING SOON !!\n')
     time.sleep(4)
@@ -62,7 +76,7 @@ def obtains(itm, usrName):
 
 def enter_command(location):
     ''' Function is used to enter command into the game '''
-    if location == 'beginning':
+    if location == 'Beginning':
 
         usr_command = str(input('\t\t\t:> ')).lower()
 
@@ -89,28 +103,28 @@ def enter_command(location):
 
         usr_command = str(input(':> ')).lower()
 
-        if usr_command == 'look' and location != 'beginning':
+        if usr_command == 'look' and location != 'Beginning':
             # Class Locations. Per location 1. Intro
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
-        elif usr_command == 'dig' and location != 'beginning':
+        elif usr_command == 'dig' and location != 'Beginning':
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
-        elif usr_command == 'map' and location != 'beginning':
+        elif usr_command == 'map' and location != 'Beginning':
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
-        elif usr_command == 'spellbook' and location != 'beginning':
+        elif usr_command == 'spellbook' and location != 'Beginning':
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
-        elif usr_command == 'save' and location != 'beginning':
+        elif usr_command == 'save' and location != 'Beginning':
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
-        elif usr_command == 'load' and location != 'beginning':
+        elif usr_command == 'load' and location != 'Beginning':
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
             comming_soon()
 
@@ -128,7 +142,7 @@ def usr_type_error(location, usr_command):
     randomnr = random.randrange(0, len(fAI))
 
     # Random answer genereated with TABS for the begin menus of the game (Welcome and Help)
-    if location == 'beginning':
+    if location == 'Beginning':
         print('\t\t\t' + fAI[randomnr].format(usr_command) + '\n')
         enter_command(location)
     else:
@@ -182,7 +196,7 @@ def matrix():
 
     space = '\n' * 40
     base.Typing(tspeed, space)
-    os.system('clear')
+    sys_clear()
 
     return None
 
@@ -190,7 +204,7 @@ def matrix():
 def quit():
     ''' Exits the game with the game logo '''
 
-    os.system('clear')
+    sys_clear()
 
     text = '''
                             Thank you for playing!'''
