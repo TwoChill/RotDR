@@ -4,20 +4,20 @@ import os
 import time
 import base
 import engine
-
+import platform
 
 tspeed = 0.05
 
 try:
-    os.system('clear')
+    engine.sys_clear()
 
-    location = 'beginning'
+    location = 'Beginning'
 
     # Gets and prints the game logo.
     Game_Name = engine.game_name()
     base.Typing(0.001, Game_Name)
     time.sleep(2)
-    os.system('clear')
+    engine.sys_clear()
 
     # Gets the start menu.
     Start_Game = base.Menus(location)
@@ -35,7 +35,7 @@ try:
     usrName = player.usrName
 
     # Tutorial
-    location = 'garden'
+    location = 'Home'
     quest = base.Quest(usrName, usrGendr, location)
     quest.tutorial(usrName, usrGendr, location)
 
