@@ -4,6 +4,7 @@ import sys
 import random
 import keyboard  # pip install keyboard
 import engine
+import platform
 
 
 usr_answer = ('yes', 'y', 'no', 'n')
@@ -116,7 +117,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 Typing(tspeed, text)
 
                 time.sleep(3)
-                os.system('clear')
+                engine.sys_clear()
 
                 usrGendr = usrGendr_boy
             elif usrGendr == 'girl':
@@ -124,14 +125,14 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 Typing(tspeed, text)
 
                 time.sleep(3)
-                os.system('clear')
+                engine.sys_clear()
 
                 usrGendr = usrGendr_girl
             else:
                 randomnr = random.randint(0, len(fAI_CC) - 1)
                 Typing(tspeed, fAI_CC[randomnr])
                 time.sleep(3)
-                os.system('clear')
+                engine.sys_clear()
 
                 usrGendr = str(
                     input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
@@ -148,7 +149,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
             if usrName == "":
                 Typing(tspeed, fAI_CC[randomnr])
                 time.sleep(3)
-                os.system('clear')
+                engine.sys_clear()
 
                 usrName = str(
                     input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
@@ -161,13 +162,13 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
                     Typing(tspeed, fAI_CC[randomnr])
                     time.sleep(3)
-                    os.system('clear')
+                    engine.sys_clear()
 
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
                 elif answer in usr_answer[:2]:
-                    os.system('clear')
+                    engine.sys_clear()
                     text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
                     Typing(0.05, text.format(usrName))
@@ -175,7 +176,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
                     engine.matrix()
                 else:
-                    os.system('clear')
+                    engine.sys_clear()
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
@@ -251,8 +252,8 @@ class Location(object):
 
     def get_intro(self, location):
         '''Every location upon first entry, has a introduction'''
-        if location == 'beginning':
-            os.system('clear')
+        if location == 'Beginning':
+            engine.sys_clear()
 
             text = '''
             You are about to embark on a journey of the imagination.
@@ -263,7 +264,7 @@ class Location(object):
                 .... So let's create a character! ....'''
             Typing(0.05, text)
             time.sleep(3)
-            os.system('clear')
+            engine.sys_clear()
 
     def get_map(self, location):
         '''Show map and current location'''
@@ -276,7 +277,7 @@ class Menus(object):
         self.game_name = engine.game_name()
 
     def start_menu(self, location):
-        os.system('clear')
+        engine.sys_clear()
         print(self.game_name)
         tspeed = 0.005
 
@@ -301,8 +302,8 @@ class Menus(object):
 
     def get_help(self, location):
 
-        if location == 'beginning':
-            os.system('clear')
+        if location == 'Beginning':
+            engine.sys_clear()
             print(self.game_name)
             tspeed = 0.005
 
@@ -397,7 +398,6 @@ class Quest(Hero):
     def __init__(self, usrName, usrGendr, location):
         super().__init__(usrName, usrGendr, location)
 
-    @classmethod
     def tutorial(self, usrName, usrGendr, location):
 
         mentorName = ''
@@ -431,7 +431,7 @@ Afther a few moments,
         Typing(tspeed, [text, text1])
 
         input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
-        os.system('clear')
+        engine.sys_clear()
 
         text = f'''
 {usrName} looks around at the {location}
@@ -451,7 +451,7 @@ A feeling of familiarity came over {usrName} as {usrGendr[0]} sees
         mentorName = mentor.get_name(usrName, usrGendr)
 
         time.sleep(3)
-        os.system('clear')
+        engine.sys_clear()
 
         text = f'''
 With a confuced face, {mentorName} walks up to {usrName}
@@ -471,8 +471,8 @@ and a rainbow-colored thermic force shoots out of his hand ...
 
 A warm feeling came over {usrName}.
 '''
-        time.sleep(4)
         Typing(tspeed, text)
+        time.sleep(4)
 
         engine.obtains('DIG', usrName)
         engine.cmd_tutorial('dig')
@@ -482,26 +482,31 @@ A warm feeling came over {usrName}.
 {mentorName} pukes from excaustion!
 But he looks happy...
 Probably beacuse you can help find his map now.\n'''
+        Typing(tspeed, text)
         time.sleep(2)
 
         text1 = f'''
 {usrName} puts {usrGendr[3]} hand on the ground..
 The same rainbow-colored thermic force
 shoots from {usrGendr[3]} arm through and out off his hand!\n'''
+        Typing(tspeed, text1)
         time.sleep(1)
 
         text2 = f'''
 {usrName} somehow opens a small black portal
 with evaporating 1's and 0's around the edges.\n'''
+        Typing(tspeed, text2)
 
         text3 = f'''
 {usrName}'s hand went through the ground's dimension and {usrGendr[0]} felt something...\n'''
+        Typing(tspeed, text3)
         time.sleep(3)
 
         text4 = f'''
 It was the map {mentorName} was looking for!'''
+        Typing(tspeed, text4)
         time.sleep(4)
-        os.system('clear')
+        engine.sys_clear()
 
         text5 = f'''
 {usrName} turns around and gives the map to {usrGendr[3]} mentor.
@@ -511,16 +516,20 @@ and with a snap of his fingers the map vanishes .. !?!
 
 {mentorName} looks at {usrName} and asks {usrGendr[3]} to use the map ..
 '''
-        Typing(tspeed, [text, text1, text2, text3, text4, text5])
+        Typing(tspeed, text5)
+        time.sleep(3)
+
         engine.obtains('MAP', usrName)
         engine.cmd_tutorial('map')
 
         answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+        
+        first_entered = True
 
         while True:
             if answer == 'map':
-                map = Map(location)
-                map.get_map(usrName, usrGendr, location, bool)
+                map = Map(usrName, usrGendr, location)
+                map.get_map(usrName, usrGendr, location, first_entered)
             else:
                 answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
 
@@ -541,79 +550,78 @@ and with a snap of his fingers the map vanishes .. !?!
         pass
 
 
-class Map(object):
-    def __init__(self, location):
+class Map(Hero):
+    def __init__(self, usrName, usrGendr, location):
+        super().__init__(usrName, usrGendr, location)
+    
+    def get_map(self, usrName, usrGendr, location, first_entered):
         self.location = location
+        self.first_entered = first_entered
 
-    @staticmethod
-    def get_map(usrName, usrGendr, location, bool):
-        false = False
-        # Makes the map look empty
+        # Create new instance to separate keys en values of dict in static 'locator' methode
+        map = Map(usrName, usrGendr, location)
+        x = map.locator(location, first_entered).keys()
+        y = map.locator(location, first_entered).values()
+        
+        # Every time get_map is called, this block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
+        land_name_zip = {key: value for key, value in zip(x, y)} 
+        
         land_name = []
+        for place in land_name_zip.keys():       
+            if land_name_zip.values() is not True:
+                land_name.append(place)
+            else:
+                land_name.append('' * len(place))
 
-        # except by conditions below
-        if ((location == 'Home' or location == 'Garden') and (Map.first_entered(location, bool) == True)):
-            land_name = ['     ', '           ', '    ', '           ', '     ',
-                         '           ', '    ', '         ', '         ', '     ', 'HOME']
-        # Displays same map if player goes to Garden more the once but hasn't been to other areas.
-        elif ((location == 'Home' or location == 'Garden') and (Map.first_entered(location, bool) == false)):
-            #        print('>>> bool is false =', bool)
-            land_name = ['     ', '           ', '    ', '           ', '     ',
-                         '           ', '    ', '         ', '         ', '     ', 'HOME']
 
-        map = f'''
+        mapz = f'''
     {usrName} opens {usrGendr[3]} map! (in {location})
-                                        -----------
-                                        |           |
-                        -----------     |           |
-                        |           |  → |   {land_name[9]}   |
+                                          -----------
+                                         |           |
+                         -----------     |           |
+                        |           |  → | {land_name[9]} |
                         |           |     -----------
-                        |   {land_name[0]}   |
-                        -----------
+                        | {land_name[1]} |
+                         -----------
                             ↓    ↑
+         -----------      -----------      -----------
+        |           |  ← |           |  ← |           |
+        |           |    |           |    |           |
+        |{land_name[3]}| →  |   {land_name[2]}   | →  |{land_name[3]}|
+         -----------      -----------      -----------
+            ↓    ↑           ↓    ↑           ↓    ↑
+         -----------      -----------      -----------
+        |           |  ← |           |  ← |           |
+        |           |    |           |    |           |
+        |    {land_name[4]}   | →  |    {land_name[0]}   | →  |    {land_name[8]}   |
+         -----------      -----------      -----------
+            ↓    ↑                            ↓    ↑
         -----------      -----------      -----------
         |           |  ← |           |  ← |           |
         |           |    |           |    |           |
-        |{land_name[1]}| →  | {land_name[7]} | →  | {land_name[8]} |
-        -----------      -----------      -----------
-        ↓    ↑           ↓    ↑           ↓    ↑
-        -----------      -----------      -----------
-        |           |  ← |           |  ← |           |
-        |           |    |           |    |           |
-        |    {land_name[2]}   | →  |    {land_name[10]}   | →  |    {land_name[6]}   |
-        -----------      -----------      -----------
-        ↓    ↑                            ↓    ↑
-        -----------      -----------      -----------
-        |           |  ← |           |  ← |           |
-        |           |    |           |    |           |
-        |{land_name[3]}| →  |   {land_name[4]}   | →  |{land_name[5]}|
-        -----------      -----------      -----------
+        |{land_name[5]}| →  |   {land_name[6]}   | →  |{land_name[7]}|
+         -----------      -----------      -----------
         '''
-
-        print(map)
-        input('Press ENTER to close the map :> ')
-        print(f'\n\n{usrName} closes {usrGendr[3]} map!\n\n')
+        return mapz
 
     @staticmethod
-    def first_entered(location, bool):
+    def locator(location, first_entered):
 
-        dic_first_entered = {
+        dic_locator = {
             'Home': True,
-            'Garden': True,
-            'usrName_room': True,
             'Wildland': True,
             'North': True,
-            'North_West': True,
+            'North__West': True,
             'West': True,
-            'South_West': True,
+            'South__West': True,
             'South': True,
-            'South_East': True,
+            'South__East': True,
             'East': True,
-            'DarkLands': True,
+            'DarkLands': True
         }
-        # Change the value of a location to false
-        if bool is False:
-            dic_first_entered[location] = False
+        
+        # Change the value to False then shows up in the map.
+        if first_entered is True:
+            dic_locator[location] = False
 
-        # Returns the value of a location.
-        return dic_first_entered.get(location)
+        return dic_locator
