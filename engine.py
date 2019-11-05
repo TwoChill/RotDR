@@ -21,7 +21,7 @@ fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
 
 def sys_clear():
     ''' Clears terminal screen for diffrent OS's '''
-    
+
     if 'linux' in platform.platform().lower():
         os.system('clear')
     elif 'windows' in platform.platform().lower():
@@ -32,7 +32,7 @@ def sys_clear():
 
 def comming_soon():
     ''' Displays 'COMMING SOON' message. Meaning the rest of the game hasn't been programmed yet '''
-    
+
     time.sleep(2)
     print('\n\t\t\t!! COMMING SOON !!\n')
     time.sleep(4)
@@ -62,12 +62,28 @@ def cmd_tutorial(cmd):
     base.Typing(tspeed, [text, text1])
 
 
-def obtains(itm, usrName):
+def colored_name(name, color):
+    ''' This functions color's text '''
+
+    if color == 'red':
+        return base.bcolors.FAIL + base.bcolors.BOLD + name + base.bcolors.ENDC
+    elif color == 'green':
+        return base.bcolors.OKGREEN + base.bcolors.BOLD + name + base.bcolors.ENDC
+    elif color == 'blue':
+        return base.bcolors.OKBLUE + base.bcolors.BOLD + name + base.bcolors.ENDC
+    elif color == 'orange':
+        return base.bcolors.WARNING + base.bcolors.BOLD + name + base.bcolors.ENDC
+
+
+def obtains(cmd, usrName):
     ''' When HERO obtains something, a text will be displayed '''
-    line = '=' * (len(usrName) + 11 + len(itm))
+    time.sleep(4)
+    line = '=' * (len(usrName) + 11 + len(cmd))
 
     text = base.bcolors.FAIL + base.bcolors.BOLD + \
-        f'''\n\t{line}\n\t{usrName.capitalize()} obtains {itm}!\n\t{line}\n''' + \
+        f'\n\t{line}\n\t' + base.bcolors.ENDC + \
+        f'{usrName.capitalize()} ' + base.bcolors.FAIL + \
+        base.bcolors.BOLD + f'obtains {cmd}!\n\t{line}\n' + \
         base.bcolors.ENDC
 
     base.Typing(tspeed, text)
