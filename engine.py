@@ -7,6 +7,7 @@ import base
 import platform
 
 tspeed = 0.005
+txt_wait = 3
 
 usr_answer = ('yes', 'y', 'no', 'n')
 
@@ -33,9 +34,9 @@ def sys_clear():
 def comming_soon():
     ''' Displays 'COMMING SOON' message. Meaning the rest of the game hasn't been programmed yet '''
 
-    time.sleep(2)
+    time.sleep(txt_wait)
     print('\n\t\t\t!! COMMING SOON !!\n')
-    time.sleep(4)
+    time.sleep(txt_wait)
     quit()
 
 
@@ -62,63 +63,50 @@ def cmd_tutorial(cmd):
     base.Typing(tspeed, [text, text1])
 
 
-def colored_name(name, color):
-    ''' This functions color's text '''
-
-    if color == 'red':
-        return base.bcolors.FAIL + base.bcolors.BOLD + name + base.bcolors.ENDC
-    elif color == 'green':
-        return base.bcolors.OKGREEN + base.bcolors.BOLD + name + base.bcolors.ENDC
-    elif color == 'blue':
-        return base.bcolors.OKBLUE + base.bcolors.BOLD + name + base.bcolors.ENDC
-    elif color == 'orange':
-        return base.bcolors.WARNING + base.bcolors.BOLD + name + base.bcolors.ENDC
-
-
 def obtains(cmd, usrName):
     ''' When HERO obtains something, a text will be displayed '''
-    time.sleep(4)
+
+    time.sleep(txt_wait)
     line = '=' * (len(usrName) + 11 + len(cmd))
 
     text = base.bcolors.FAIL + base.bcolors.BOLD + \
-        f'\n\t{line}\n\t' + base.bcolors.ENDC + \
-        f'{usrName.capitalize()} ' + base.bcolors.FAIL + \
+        f'\n\t{line}\n\t' + \
+        f'{usrName}' + base.bcolors.FAIL + \
         base.bcolors.BOLD + f'obtains {cmd}!\n\t{line}\n' + \
         base.bcolors.ENDC
 
     base.Typing(tspeed, text)
-    time.sleep(3)
+
+
+time.sleep(txt_wait)
 
 
 def enter_command(location):
     ''' Function is used to enter command into the game '''
+    usr_command = str(input('\t\t\t:> ')).lower()
+
     if location == 'Beginning':
 
-        usr_command = str(input('\t\t\t:> ')).lower()
-
-        if usr_command == 'play':
+        if usr_command in ('play', 'Play', 'PLAY'):
             Start_Game = base.Location(location)
             Start_Game.get_intro(location)
 
-        elif usr_command == 'help':
+        elif usr_command in ('help', 'Help', 'HELP'):
             Help = base.Menus(location)
             Help.get_help(location)
 
-        elif usr_command == 'load':
+        elif usr_command in ('load', 'Load', 'LOAD'):
             comming_soon()
 
-        elif usr_command == 'back':
+        elif usr_command in ('back', 'Back', 'BACK'):
             Restart_Game = base.Menus(location)
             Restart_Game.start_menu(location)
 
-        elif usr_command == 'quit':
+        elif usr_command in ('quit', 'Quit', 'QUIT'):
             quit()
         else:
             usr_type_error(location, usr_command)
     else:
-
-        usr_command = str(input(':> ')).lower()
-
         if usr_command == 'look' and location != 'Beginning':
             # Class Locations. Per location 1. Intro
             print(f'\t\t\t{usr_command} command is COMMING SOON').upper()
@@ -170,21 +158,21 @@ def game_name():
     ''' The gamename in TextART form. '''
 
     game_name = '''
-                                _____   _                                
-                               |  __ \ (_)                               
-                               | |__) | _  ___   ___                     
-                               |  _  / | |/ __| / _ \                    
-                  __   _    _  | | \ \ | |\__ \|  __/                    
-                 / _| | |  | | |_|  \_\|_||___/ \___|                    
-           ___  | |_  | |_ | |__    ___                                  
-          / _ \ |  _| | __|| '_ \  / _ \                                 
-  _____  | (_) || |   | |_ | | | ||  __/    _____   _      _             
- |  __ \  \___/ |_|    \__||_| |_| \___|   |  __ \ (_)    | |            
- | |  | | _ __  __ _   __ _   ___   _ __   | |__) | _   __| |  ___  _ __ 
+                                _____   _
+                               |  __ \ (_)
+                               | |__) | _  ___   ___
+                               |  _  / | |/ __| / _ \
+                  __   _    _  | | \ \ | |\__ \|  __/
+                 / _| | |  | | |_|  \_\|_||___/ \___|
+           ___  | |_  | |_ | |__    ___
+          / _ \ |  _| | __|| '_ \  / _ \
+  _____  | (_) || |   | |_ | | | ||  __/    _____   _      _
+ |  __ \  \___/ |_|    \__||_| |_| \___|   |  __ \ (_)    | |
+ | |  | | _ __  __ _   __ _   ___   _ __   | |__) | _   __| |  ___  _ __
  | |  | || '__|/ _` | / _` | / _ \ | '_ \  |  _  / | | / _` | / _ \| '__|
- | |__| || |  | (_| || (_| || (_) || | | | | | \ \ | || (_| ||  __/| |   
- |_____/ |_|   \__,_| \__, | \___/ |_| |_| |_|  \_\|_| \__,_| \___||_|   
-                       __/ |                                             
+ | |__| || |  | (_| || (_| || (_) || | | | | | \ \ | || (_| ||  __/| |
+ |_____/ |_|   \__,_| \__, | \___/ |_| |_| |_|  \_\|_| \__,_| \___||_|
+                       __/ |
                       |___/                                              '''
     return game_name
 
