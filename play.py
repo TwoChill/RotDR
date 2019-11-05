@@ -7,6 +7,7 @@ import engine
 import platform
 
 tspeed = 0.05
+color_name = 'blue'
 
 try:
     engine.sys_clear()
@@ -32,7 +33,7 @@ try:
     player.character_creation()
 
     usrGendr = player.usrGendr
-    usrName = player.usrName
+    usrName = engine.colored_name(player.usrName, color_name)
 
     # Tutorial
     location = 'Home'
