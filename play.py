@@ -5,9 +5,9 @@ import time
 import base
 import engine
 import platform
+import text
 
 tspeed = 0.05
-color_name = 'blue'
 
 try:
     engine.sys_clear()
@@ -33,12 +33,15 @@ try:
     player.character_creation()
 
     usrGendr = player.usrGendr
-    usrName = engine.colored_name(player.usrName, color_name)
+    usrName = player.usrName
+
+    mentorName = None
+    text.game_text(usrName, usrGendr, mentorName, location)
 
     # Tutorial
     location = 'Home'
     quest = base.Quest(usrName, usrGendr, location)
-    quest.tutorial(usrName, usrGendr, location)
+    quest.tutorial_quest(usrName, usrGendr, location)
 
 except KeyboardInterrupt:
     engine.quit()
