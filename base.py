@@ -7,6 +7,7 @@ import engine
 import platform
 
 
+color_name = ''
 usr_answer = ('yes', 'y', 'no', 'n')
 usrGendr_boy = ("he", "his", "him", "his",
                 "He", "His", "Him", "His")
@@ -232,7 +233,8 @@ class Mentor(Person):
 
         self.mentorName = mentorName
 
-        return mentorName
+        # Colored_name function has NONE as plurar for now.. Or else all the mentor name will have ''s' at the end
+        return engine.colored_name(mentorName, color_name)
 
 
 class Enemy(Person):
@@ -252,6 +254,7 @@ class Location(object):
 
     def get_intro(self, location):
         '''Every location upon first entry, has a introduction'''
+
         if location == 'Beginning':
             engine.sys_clear()
 
@@ -261,14 +264,10 @@ class Location(object):
 
                     .. With a helping  hand offcourse ..
 
-                .... So let's create a character! ....'''
+                   .... So let's create a character! ....'''
             Typing(0.05, text)
             time.sleep(3)
             engine.sys_clear()
-
-    def get_map(self, location):
-        '''Show map and current location'''
-        pass
 
 
 class Menus(object):
@@ -399,6 +398,7 @@ class Quest(Hero):
         super().__init__(usrName, usrGendr, location)
 
     def tutorial(self, usrName, usrGendr, location):
+        time.sleep(3)
 
         mentorName = ''
 
@@ -420,15 +420,8 @@ Afther a few moments,
 '''
         Typing(tspeed, text)
 
-        time.sleep(2)
-
-        text = bcolors.FAIL + bcolors.BOLD + bcolors.UNDERLINE + \
-            "\n# Tutorial: Use command 'LOOK' #" + bcolors.ENDC
-        text1 = bcolors.WARNING + bcolors.UNDERLINE + \
-            "\nType" + bcolors.FAIL + " 'look' " + \
-            bcolors.WARNING + "to look around your surroundings" + bcolors.ENDC
-
-        Typing(tspeed, [text, text1])
+        engine.obtains('LOOK', usrName)
+        engine.cmd_tutorial('look')
 
         input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
         engine.sys_clear()
@@ -449,12 +442,10 @@ A feeling of familiarity came over {usrName} as {usrGendr[0]} sees
 
         mentor = Mentor(mentorName)
         mentorName = mentor.get_name(usrName, usrGendr)
-
-        time.sleep(3)
         engine.sys_clear()
 
         text = f'''
-With a confuced face, {mentorName} walks up to {usrName}
+With a confused face, {mentorName} walks up to {usrName}
 and he asks to help him find a map that he burried
 somewhere around this {location}.
 
@@ -472,11 +463,12 @@ and a rainbow-colored thermic force shoots out of his hand ...
 A warm feeling came over {usrName}.
 '''
         Typing(tspeed, text)
-        time.sleep(4)
 
         engine.obtains('DIG', usrName)
         engine.cmd_tutorial('dig')
-        time.sleep(3)
+
+        input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+        engine.sys_clear()
 
         text = f'''
 {mentorName} pukes from excaustion!
@@ -517,21 +509,15 @@ and with a snap of his fingers the map vanishes .. !?!
 {mentorName} looks at {usrName} and asks {usrGendr[3]} to use the map ..
 '''
         Typing(tspeed, text5)
-        time.sleep(3)
 
         engine.obtains('MAP', usrName)
         engine.cmd_tutorial('map')
 
-        answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
-        
-        first_entered = True
+        input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
 
-        while True:
-            if answer == 'map':
-                map = Map(usrName, usrGendr, location)
-                map.get_map(usrName, usrGendr, location, first_entered)
-            else:
-                answer = input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
+        first_entered = ''
+        map = Map(usrName, usrGendr, location)
+        map.get_map(usrName, usrGendr, location, first_entered)
 
         input()
 
@@ -553,35 +539,41 @@ and with a snap of his fingers the map vanishes .. !?!
 class Map(Hero):
     def __init__(self, usrName, usrGendr, location):
         super().__init__(usrName, usrGendr, location)
-    
+
     def get_map(self, usrName, usrGendr, location, first_entered):
+        ''' Holds a record of were player has been and shows it on a map '''
         self.location = location
-        self.first_entered = first_entered
+        self.first_entered = True
 
         # Create new instance to separate keys en values of dict in static 'locator' methode
         map = Map(usrName, usrGendr, location)
-        x = map.locator(location, first_entered).keys()
-        y = map.locator(location, first_entered).values()
-        
-        # Every time get_map is called, this block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
-        land_name_zip = {key: value for key, value in zip(x, y)} 
-        
+
+        # Checks to see if player location is True or False.
+        # Returns dictionary with locations as key and True as values (where player has visited.)
+        check = map.locator(location, first_entered)
+
+        # This block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
+        getkeys = map.locator(location, first_entered).keys()
+        getvalues = map.locator(location, first_entered).values()
+        getkeys_getvalues_zip = {key: value for key,
+                                 value in zip(getkeys, getvalues)}
+
+        # This for loops idea is to place empty spaces were player hasn't been yet (TRUE) and appends location on place player does (FALSE) switch deze
         land_name = []
-        for place in land_name_zip.keys():       
-            if land_name_zip.values() is not True:
+
+        for place, first_entered in getkeys_getvalues_zip.items():
+            if first_entered == True:
                 land_name.append(place)
             else:
-                land_name.append('' * len(place))
+                land_name.append(' ' * len(place))
 
-
-        mapz = f'''
-    {usrName} opens {usrGendr[3]} map! (in {location})
+        usr_map = f'''
                                           -----------
                                          |           |
                          -----------     |           |
                         |           |  → | {land_name[9]} |
                         |           |     -----------
-                        | {land_name[1]} |
+                        | {land_name[1]}  |
                          -----------
                             ↓    ↑
          -----------      -----------      -----------
@@ -601,27 +593,30 @@ class Map(Hero):
         |           |    |           |    |           |
         |{land_name[5]}| →  |   {land_name[6]}   | →  |{land_name[7]}|
          -----------      -----------      -----------
+        
+        Press 'ENTER' to continue
+        Press 'CTRL' to continue and clear the screen
         '''
-        return mapz
+        print(usr_map)
 
     @staticmethod
     def locator(location, first_entered):
 
         dic_locator = {
-            'Home': True,
-            'Wildland': True,
-            'North': True,
-            'North__West': True,
-            'West': True,
-            'South__West': True,
-            'South': True,
-            'South__East': True,
-            'East': True,
-            'DarkLands': True
+            'Home': False,
+            'Wildland': False,
+            'North': False,
+            'North__West': False,
+            'West': False,
+            'South__West': False,
+            'South': False,
+            'South__East': False,
+            'East': False,
+            'DarkLands': False
         }
-        
-        # Change the value to False then shows up in the map.
-        if first_entered is True:
-            dic_locator[location] = False
+
+        # This block checks players location. If it's player first visit, changes the dict value to True
+        if dic_locator[location] == False:
+            dic_locator[location] = True
 
         return dic_locator
