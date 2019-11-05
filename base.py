@@ -7,15 +7,17 @@ import engine
 import platform
 
 
-color_name = ''
+usr_name_color = 'orange'
 usr_answer = ('yes', 'y', 'no', 'n')
 usrGendr_boy = ("he", "his", "him", "his",
                 "He", "His", "Him", "His")
 usrGendr_girl = ("she", "hers", "her", "her",
                  "She", "Hers", "Her", "Her")
 mentorName = ''
+mentorName_color = 'blue'
 
 tspeed = 0.05
+txt_wait = 3
 
 
 class Person(object):
@@ -91,6 +93,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
     def __init__(self, usrName, usrGendr, location):
         # super().__init__(hp, mp, atk, df, magic)
         self.usrName = ''
+        self.usrName_Plurar = ''
         self.usrGendr = ''
 
         self.backpack = {}  # Here's going to Inventory and stuff like that
@@ -117,7 +120,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 text = '\n\n\t\tA Boy has been created!\n\n'
                 Typing(tspeed, text)
 
-                time.sleep(3)
+                time.sleep(txt_wait)
                 engine.sys_clear()
 
                 usrGendr = usrGendr_boy
@@ -125,14 +128,14 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 text = '\n\n\t\tA Girl has been created!\n\n'
                 Typing(tspeed, text)
 
-                time.sleep(3)
+                time.sleep(txt_wait)
                 engine.sys_clear()
 
                 usrGendr = usrGendr_girl
             else:
                 randomnr = random.randint(0, len(fAI_CC) - 1)
                 Typing(tspeed, fAI_CC[randomnr])
-                time.sleep(3)
+                time.sleep(txt_wait)
                 engine.sys_clear()
 
                 usrGendr = str(
@@ -149,7 +152,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
             if usrName == "":
                 Typing(tspeed, fAI_CC[randomnr])
-                time.sleep(3)
+                time.sleep(txt_wait)
                 engine.sys_clear()
 
                 usrName = str(
@@ -162,7 +165,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 if '' == answer in usr_answer[2:]:
 
                     Typing(tspeed, fAI_CC[randomnr])
-                    time.sleep(3)
+                    time.sleep(txt_wait)
                     engine.sys_clear()
 
                     usrName = str(
@@ -173,7 +176,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                     text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
                     Typing(0.05, text.format(usrName))
-                    time.sleep(1)
+                    time.sleep(txt_wait)
 
                     engine.matrix()
                 else:
@@ -183,10 +186,12 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                     continue
             break
 
-        self.usrName = usrName
+        self.usrName = Typing.text_decor(
+            Typing.text_color(usrName, usr_name_color), 'bold')
+        self.usrName_Plurar = usrName + "'s"
         self.usrGendr = usrGendr
 
-        return usrGendr
+        return [self.usrName, self.usrName_Plurar], self.usrGendr
 
     def get_backpack(self):
         '''Function to see what and how many items the player has'''
@@ -204,6 +209,7 @@ class Mentor(Person):
     def __init__(self, mentorName):
         # super().__init__(hp, mp, atk, df, magic)
         self.mentorName = mentorName
+        self.mentorName_Plurar = mentorName + "'s"
 
     def get_name(self, usrName, usrGendr):
         mentorName = str(
@@ -230,11 +236,14 @@ class Mentor(Person):
                         input("\nChoose your mentor's name:\n:> ")).capitalize()
                     continue
             break
+        self.usrName = Typing.text_decor(
+            Typing.text_color(usrName, usr_name_color), 'bold')
+        self.usrName_Plurar = usrName + "'s"
+        self.mentorName = Typing.text_decor(
+            Typing.text_color(mentorName, mentorName_color), 'bold')
+        self.mentorName_Plurar = mentorName + "'s"
 
-        self.mentorName = mentorName
-
-        # Colored_name function has NONE as plurar for now.. Or else all the mentor name will have ''s' at the end
-        return engine.colored_name(mentorName, color_name)
+        return [self.mentorName, self.mentorName_Plurar]
 
 
 class Enemy(Person):
@@ -266,7 +275,7 @@ class Location(object):
 
                    .... So let's create a character! ....'''
             Typing(0.05, text)
-            time.sleep(3)
+            time.sleep(txt_wait)
             engine.sys_clear()
 
 
@@ -301,11 +310,6 @@ class Menus(object):
 
     def get_help(self, location):
 
-        if location == 'Beginning':
-            engine.sys_clear()
-            print(self.game_name)
-            tspeed = 0.005
-
         Help_Menu = '''
 
                         ############################
@@ -328,8 +332,15 @@ class Menus(object):
                         - Good luck and have fun!! -
                         ############################
         '''
-        Typing(tspeed, Help_Menu)
-        engine.enter_command(location)
+        if location == 'Beginning':
+            engine.sys_clear()
+            print(self.game_name)
+            tspeed = 0.005
+            Typing(tspeed, Help_Menu)
+            engine.enter_command(location)
+        else:
+            Typing(tspeed, Help_Menu)
+            engine.enter_command(location)
 
 
 # class Spellbook:
@@ -376,12 +387,12 @@ class Typing(bcolors):
         self.bcolors = bcolors
 
         text = ''.join(self.text)
-        for l in text:
 
+        for l in text:
+            # This block lets player press CTRL and skip the rolling of text #
             if keyboard.is_pressed('ctrl'):
                 time.sleep(0.01)
                 speed = 0.00001
-
             sys.stdout.write(l)
             sys.stdout.flush()
             time.sleep(speed)
@@ -389,7 +400,27 @@ class Typing(bcolors):
         sys.stdout.write('\n')
         sys.stdout.flush()
 
-    # create a option to press ENTER and skip the rolling text #
+    @classmethod
+    def text_color(cls, text, color):
+        ''' This function color's text '''
+
+        if color == 'red':
+            return bcolors.FAIL + text + bcolors.ENDC
+        elif color == 'green':
+            return bcolors.OKGREEN + text + bcolors.ENDC
+        elif color == 'blue':
+            return bcolors.OKBLUE + text + bcolors.ENDC
+        elif color == 'orange':
+            return bcolors.WARNING + text + bcolors.ENDC
+
+    @classmethod
+    def text_decor(cls, text, decor):
+        ''' This function decorates text like UNDERLINe and BOLD '''
+
+        if decor == 'underline':
+            return bcolors.UNDERLINE + text + bcolors.ENDC
+        elif decor == 'bold':
+            return bcolors.BOLD + text + bcolors.ENDC
 
 
 class Quest(Hero):
@@ -397,10 +428,11 @@ class Quest(Hero):
     def __init__(self, usrName, usrGendr, location):
         super().__init__(usrName, usrGendr, location)
 
-    def tutorial(self, usrName, usrGendr, location):
-        time.sleep(3)
+    def tutorial_quest(self, usrName, usrGendr, location):
+        time.sleep(txt_wait)
 
         mentorName = ''
+        mentorName_Plurar = ''
 
         text = f'''
 {usrName} slowly opens {usrGendr[3]} eyes from {usrGendr[3]} hammock.
@@ -438,14 +470,14 @@ A feeling of familiarity came over {usrName} as {usrGendr[0]} sees
 {usrGendr[3]} mentor standing in the doorway of the log.
 '''
         Typing(tspeed, text)
-        time.sleep(3)
+        time.sleep(txt_wait)
 
-        mentor = Mentor(mentorName)
+        mentor = Mentor(mentorName, mentorName_Plurar)
         mentorName = mentor.get_name(usrName, usrGendr)
         engine.sys_clear()
 
         text = f'''
-With a confused face, {mentorName} walks up to {usrName}
+With a confused face, {mentorName[0]} walks up to {usrName}
 and he asks to help him find a map that he burried
 somewhere around this {location}.
 
@@ -456,7 +488,7 @@ while mumbling some kind of strange mantra.
 While listning to the mantra, {usrName} can't help but notice,
 a strang thermic force comming of {mentorName} body.
 
-Suddenly {mentorName}'s hand glows
+Suddenly {mentorName[1]} hand glows
 and a rainbow-colored thermic force shoots out of his hand ...
 
 
@@ -475,14 +507,14 @@ A warm feeling came over {usrName}.
 But he looks happy...
 Probably beacuse you can help find his map now.\n'''
         Typing(tspeed, text)
-        time.sleep(2)
+        time.sleep(txt_wait)
 
         text1 = f'''
 {usrName} puts {usrGendr[3]} hand on the ground..
 The same rainbow-colored thermic force
 shoots from {usrGendr[3]} arm through and out off his hand!\n'''
         Typing(tspeed, text1)
-        time.sleep(1)
+        time.sleep(txt_wait)
 
         text2 = f'''
 {usrName} somehow opens a small black portal
@@ -492,12 +524,12 @@ with evaporating 1's and 0's around the edges.\n'''
         text3 = f'''
 {usrName}'s hand went through the ground's dimension and {usrGendr[0]} felt something...\n'''
         Typing(tspeed, text3)
-        time.sleep(3)
+        time.sleep(txt_wait)
 
         text4 = f'''
 It was the map {mentorName} was looking for!'''
         Typing(tspeed, text4)
-        time.sleep(4)
+        time.sleep(txt_wait)
         engine.sys_clear()
 
         text5 = f'''
