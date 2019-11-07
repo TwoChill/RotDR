@@ -2,14 +2,14 @@ import os
 import time
 import sys
 import random
-import base
+import base as clss
 
 import platform
 
-tspeed = 0.005
-txt_wait = 3
+txtSpeed = 0.05
+txtWait = 0
 
-usr_answer = ('yes', 'y', 'no', 'n')
+usrAnswer = ('yes', 'y', 'no', 'n')
 
 # This fAI (fake AI) list are responses given when the user types an unknow command. (Can be expanded upon.)
 fAI = ['Uhmm.. I think you misspelled..', "'{}', is kinda.. forein to me.",
@@ -34,51 +34,43 @@ def sys_clear():
 def comming_soon():
     ''' Displays 'COMMING SOON' message. Meaning the rest of the game hasn't been programmed yet '''
 
-    time.sleep(txt_wait)
+    time.sleep(txtWait)
     print('\n\t\t\t!! COMMING SOON !!\n')
-    time.sleep(txt_wait)
+    time.sleep(txtWait)
     quit()
 
 
 def cmd_tutorial(cmd):
     ''' Prints out an explanation on how to use commands '''
-    text = base.bcolors.FAIL + base.bcolors.BOLD + base.bcolors.UNDERLINE + \
-        "\n# Tutorial: Use command '" + cmd.upper() + "' #" + base.bcolors.ENDC
+    text = clss.bcolors.FAIL + clss.bcolors.BOLD + clss.bcolors.UNDERLINE + \
+        "\n# Tutorial: Use command '" + cmd.upper() + "' #" + clss.bcolors.ENDC
 
     if cmd == 'look':
-        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
-            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
-            base.bcolors.WARNING + "to look around your surroundings.\n" + base.bcolors.ENDC
+        text1 = clss.bcolors.WARNING + clss.bcolors.UNDERLINE + \
+            "\nType" + clss.bcolors.FAIL + " '" + cmd + "' " + \
+            clss.bcolors.WARNING + "to look around your surroundings.\n" + clss.bcolors.ENDC
 
     if cmd == 'map':
-        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
-            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
-            base.bcolors.WARNING + "to see were you are.\n" + base.bcolors.ENDC
+        text1 = clss.bcolors.WARNING + clss.bcolors.UNDERLINE + \
+            "\nType" + clss.bcolors.FAIL + " '" + cmd + "' " + \
+            clss.bcolors.WARNING + "to see were you are.\n" + clss.bcolors.ENDC
 
     if cmd == 'dig':
-        text1 = base.bcolors.WARNING + base.bcolors.UNDERLINE + \
-            "\nType" + base.bcolors.FAIL + " '" + cmd + "' " + \
-            base.bcolors.WARNING + "to open a small black portal.\n" + base.bcolors.ENDC
+        text1 = clss.bcolors.WARNING + clss.bcolors.UNDERLINE + \
+            "\nType" + clss.bcolors.FAIL + " '" + cmd + "' " + \
+            clss.bcolors.WARNING + "to open a small black portal.\n" + clss.bcolors.ENDC
 
-    base.Typing(tspeed, [text, text1])
+    clss.Typing(txtSpeed, [text, text1])
+
+    input(clss.bcolors.FAIL + '\n:> ' + clss.bcolors.ENDC)
 
 
 def obtains(cmd, usrName):
     ''' When HERO obtains something, a text will be displayed '''
 
-    time.sleep(txt_wait)
-    line = '=' * (len(usrName) + 11 + len(cmd))
-
-    text = base.bcolors.FAIL + base.bcolors.BOLD + \
-        f'\n\t{line}\n\t' + \
-        f'{usrName}' + base.bcolors.FAIL + \
-        base.bcolors.BOLD + f'obtains {cmd}!\n\t{line}\n' + \
-        base.bcolors.ENDC
-
-    base.Typing(tspeed, text)
-
-
-time.sleep(txt_wait)
+    time.sleep(txtWait)
+    clss.Typing(txtSpeed, clss.Typing.text_decor('red', f'\n\t{usrName.upper()} OBTAINS {cmd}!\n', ['underline', 'bold']))
+    time.sleep(txtWait)
 
 
 def enter_command(location):
@@ -88,18 +80,18 @@ def enter_command(location):
     if location == 'Beginning':
 
         if usr_command in ('play', 'Play', 'PLAY'):
-            Start_Game = base.Location(location)
+            Start_Game = clss.Location(location)
             Start_Game.get_intro(location)
 
         elif usr_command in ('help', 'Help', 'HELP'):
-            Help = base.Menus(location)
+            Help = clss.Menus(location)
             Help.get_help(location)
 
         elif usr_command in ('load', 'Load', 'LOAD'):
             comming_soon()
 
         elif usr_command in ('back', 'Back', 'BACK'):
-            Restart_Game = base.Menus(location)
+            Restart_Game = clss.Menus(location)
             Restart_Game.start_menu(location)
 
         elif usr_command in ('quit', 'Quit', 'QUIT'):
@@ -199,7 +191,7 @@ def matrix():
         counter += 1
 
     space = '\n' * 40
-    base.Typing(tspeed, space)
+    clss.Typing(txtSpeed, space)
     sys_clear()
 
     return None
@@ -212,9 +204,9 @@ def quit():
 
     text = '''
                             Thank you for playing!'''
-    base.Typing(tspeed, text)
+    clss.Typing(txtSpeed, text)
 
     Game_Name = game_name()
-    base.Typing(tspeed, Game_Name)
+    clss.Typing(txtSpeed, Game_Name)
 
     sys.exit()

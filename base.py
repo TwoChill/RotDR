@@ -3,21 +3,20 @@ import time
 import sys
 import random
 import keyboard  # pip install keyboard
-import engine
+import engine as func
 import platform
+import text as gameText
 
-
-usr_name_color = 'orange'
-usr_answer = ('yes', 'y', 'no', 'n')
-usrGendr_boy = ("he", "his", "him", "his",
+txtSpeed = 0.05
+txtWait = func.txtWait
+usrNameColor = 'orange'
+usrAnswer = ('yes', 'y', 'no', 'n')
+usrGendr_Boy = ("he", "his", "him", "his",
                 "He", "His", "Him", "His")
-usrGendr_girl = ("she", "hers", "her", "her",
+usrGendr_Girl = ("she", "hers", "her", "her",
                  "She", "Hers", "Her", "Her")
-mentorName = ''
-mentorName_color = 'blue'
 
-tspeed = 0.05
-txt_wait = 3
+mentorNameColor = 'blue'
 
 
 class Person(object):
@@ -102,14 +101,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
         ''' Creates Hero's name and gender.
         Txt in the game will adapt to the Hero's gender. '''
 
-        # This fAI (fake AI) list is seperate because of the display tabs.
-        fAI_CC = ['\n\t\tJust think of one strong name...\n\n',
-                  "\n\t\tIt's just a cleaver combination of A's -> Z's ..\n\n",
-                  "\n\t\t'Zolar'?, 'Matt'?, I'm just trying to help ... \n\n",
-                  "\n\t\tThere must be something you can think of..\n\n",
-                  "\n\t\tYes .. It's hard.. and forever. Sooo, take your time..\n\n",
-                  "\n\t\t..... -_-", "\n\t\tI have faith you'll succeed on your next try.. ",
-                  "\n\t\tIt's a thing now-a-day's.. Just pick on for the naritave of the game ;)\n\n"]
+        fAI_CC = gameText.fAI_CC
 
         usrGendr = str(
             input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
@@ -117,26 +109,42 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
         while True:
 
             if usrGendr == 'boy':
-                text = '\n\n\t\tA Boy has been created!\n\n'
-                Typing(tspeed, text)
+                Typing(
+                    txtSpeed, Typing.text_decor('white', gameText.createBoy, 'bold'))
 
-                time.sleep(txt_wait)
-                engine.sys_clear()
+                time.sleep(txtWait)
+                func.sys_clear()
 
-                usrGendr = usrGendr_boy
+                usrGendr = usrGendr_Boy
             elif usrGendr == 'girl':
-                text = '\n\n\t\tA Girl has been created!\n\n'
-                Typing(tspeed, text)
+                Typing(
+                    txtSpeed, Typing.text_decor('white', gameText.createGirl, 'bold'))
 
-                time.sleep(txt_wait)
-                engine.sys_clear()
+                time.sleep(txtWait)
+                func.sys_clear()
 
-                usrGendr = usrGendr_girl
+                usrGendr = usrGendr_Girl
+            elif usrGendr in ('gender-neutral', 'gender neutral'):
+                Typing(txtSpeed, gameText.fAI_CC[:-1])
+
+                randomnr = random.randint(1, 3)
+                print('>>> randomnr:', randomnr)
+
+                if randomnr == 1:
+                    Typing(txtSpeed, Typing.text_decor(
+                        None, gameText.createBoy, 'bold'))
+                    time.sleep(txtWait)
+                    func.sys_clear()
+                else:
+                    Typing(txtSpeed, Typing.text_decor(
+                        None, gameText.createGirl, 'bold'))
+                    time.sleep(txtWait)
+                    func.sys_clear()
             else:
-                randomnr = random.randint(0, len(fAI_CC) - 1)
-                Typing(tspeed, fAI_CC[randomnr])
-                time.sleep(txt_wait)
-                engine.sys_clear()
+                randomnr = random.randint(0, (len(fAI_CC) - 1) - 1)
+                Typing(txtSpeed, fAI_CC[randomnr])
+                time.sleep(txtWait)
+                func.sys_clear()
 
                 usrGendr = str(
                     input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
@@ -151,9 +159,9 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
             randomnr = random.randint(0, (len(fAI_CC) - 1))
 
             if usrName == "":
-                Typing(tspeed, fAI_CC[randomnr])
-                time.sleep(txt_wait)
-                engine.sys_clear()
+                Typing(txtSpeed, fAI_CC[randomnr])
+                time.sleep(txtWait)
+                func.sys_clear()
 
                 usrName = str(
                     input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
@@ -162,32 +170,31 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 answer = str(
                     input((f'\n\t\tIs "{usrName}" correct? (Y/N):\n\t\t:> ')).lower())
 
-                if '' == answer in usr_answer[2:]:
+                if '' == answer in usrAnswer[2:]:
 
-                    Typing(tspeed, fAI_CC[randomnr])
-                    time.sleep(txt_wait)
-                    engine.sys_clear()
+                    Typing(txtSpeed, fAI_CC[randomnr])
+                    time.sleep(txtWait)
+                    func.sys_clear()
 
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
-                elif answer in usr_answer[:2]:
-                    engine.sys_clear()
+                elif answer in usrAnswer[:2]:
+                    func.sys_clear()
                     text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
                     Typing(0.05, text.format(usrName))
-                    time.sleep(txt_wait)
+                    time.sleep(txtWait)
 
-                    engine.matrix()
+                    func.matrix()
                 else:
-                    engine.sys_clear()
+                    func.sys_clear()
                     usrName = str(
                         input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
                     continue
             break
 
-        self.usrName = Typing.text_decor(
-            Typing.text_color(usrName, usr_name_color), 'bold')
+        self.usrName = Typing.text_decor(usrNameColor, usrName, 'bold')
         self.usrName_Plurar = usrName + "'s"
         self.usrGendr = usrGendr
 
@@ -209,7 +216,6 @@ class Mentor(Person):
     def __init__(self, mentorName):
         # super().__init__(hp, mp, atk, df, magic)
         self.mentorName = mentorName
-        self.mentorName_Plurar = mentorName + "'s"
 
     def get_name(self, usrName, usrGendr):
         mentorName = str(
@@ -219,7 +225,7 @@ class Mentor(Person):
         while True:
             if mentorName == '':
                 text = f"\nIt's been a rough nap... what was {usrName}'s mentor's name?'\n"
-                Typing(tspeed, text)
+                Typing(txtSpeed, text)
 
                 mentorName = str(
                     input("\n:> ")).capitalize()
@@ -229,21 +235,17 @@ class Mentor(Person):
                     input((f'\n"{mentorName}"? That sounds about right.. (Y/N):\n:> ')).lower())
                 if answer == "":
                     continue
-                elif answer.lower() in usr_answer[:2]:
+                elif answer.lower() in usrAnswer[:2]:
                     break
                 else:
                     mentorName = str(
                         input("\nChoose your mentor's name:\n:> ")).capitalize()
                     continue
             break
-        self.usrName = Typing.text_decor(
-            Typing.text_color(usrName, usr_name_color), 'bold')
-        self.usrName_Plurar = usrName + "'s"
-        self.mentorName = Typing.text_decor(
-            Typing.text_color(mentorName, mentorName_color), 'bold')
-        self.mentorName_Plurar = mentorName + "'s"
 
-        return [self.mentorName, self.mentorName_Plurar]
+        mentorName_Plurar = mentorName + "'s"
+
+        return [Typing.text_decor(mentorNameColor, [mentorName, mentorName_Plurar], 'bold')]
 
 
 class Enemy(Person):
@@ -265,7 +267,7 @@ class Location(object):
         '''Every location upon first entry, has a introduction'''
 
         if location == 'Beginning':
-            engine.sys_clear()
+            func.sys_clear()
 
             text = '''
             You are about to embark on a journey of the imagination.
@@ -275,19 +277,19 @@ class Location(object):
 
                    .... So let's create a character! ....'''
             Typing(0.05, text)
-            time.sleep(txt_wait)
-            engine.sys_clear()
+            time.sleep(txtWait)
+            func.sys_clear()
 
 
 class Menus(object):
     def __init__(self, location):
         self.location = location
-        self.game_name = engine.game_name()
+        self.game_name = func.game_name()
 
     def start_menu(self, location):
-        engine.sys_clear()
+        func.sys_clear()
         print(self.game_name)
-        tspeed = 0.005
+        txtSpeed = 0.005
 
         Welcome_Menu = '''
 
@@ -305,8 +307,8 @@ class Menus(object):
                                M.L. de France
                         ############################
         '''
-        Typing(tspeed, Welcome_Menu)
-        engine.enter_command(location)
+        Typing(txtSpeed, Welcome_Menu)
+        func.enter_command(location)
 
     def get_help(self, location):
 
@@ -333,14 +335,14 @@ class Menus(object):
                         ############################
         '''
         if location == 'Beginning':
-            engine.sys_clear()
+            func.sys_clear()
             print(self.game_name)
-            tspeed = 0.005
-            Typing(tspeed, Help_Menu)
-            engine.enter_command(location)
+            txtSpeed = 0.005
+            Typing(txtSpeed, Help_Menu)
+            func.enter_command(location)
         else:
-            Typing(tspeed, Help_Menu)
-            engine.enter_command(location)
+            Typing(txtSpeed, Help_Menu)
+            func.enter_command(location)
 
 
 # class Spellbook:
@@ -401,26 +403,37 @@ class Typing(bcolors):
         sys.stdout.flush()
 
     @classmethod
-    def text_color(cls, text, color):
-        ''' This function color's text '''
+    def text_decor(cls, color, text=None, decor=None):
+        ''' This function decorates text with UNDERLINE and/or BOLD '''
+
+        if text == None:
+            text = []
+        #text = ''.join(text)
+
+        # Hier moet code komen (for loop) die per item @@@
 
         if color == 'red':
-            return bcolors.FAIL + text + bcolors.ENDC
+            text = bcolors.FAIL + str(text) + bcolors.ENDC
         elif color == 'green':
-            return bcolors.OKGREEN + text + bcolors.ENDC
+            text = bcolors.OKGREEN + text + bcolors.ENDC
         elif color == 'blue':
-            return bcolors.OKBLUE + text + bcolors.ENDC
+            text = bcolors.OKBLUE + str(text) + bcolors.ENDC
         elif color == 'orange':
-            return bcolors.WARNING + text + bcolors.ENDC
+            text = bcolors.WARNING + text + bcolors.ENDC
+        else:
+            text = text
 
-    @classmethod
-    def text_decor(cls, text, decor):
-        ''' This function decorates text like UNDERLINe and BOLD '''
+        if decor == None:
+            decor = []
 
-        if decor == 'underline':
-            return bcolors.UNDERLINE + text + bcolors.ENDC
-        elif decor == 'bold':
-            return bcolors.BOLD + text + bcolors.ENDC
+        for i in decor:
+            if i == 'underline':
+                text = bcolors.UNDERLINE + text + bcolors.ENDC
+
+            if i == 'bold':
+                text = bcolors.BOLD + text + bcolors.ENDC
+
+        return text
 
 
 class Quest(Hero):
@@ -429,131 +442,62 @@ class Quest(Hero):
         super().__init__(usrName, usrGendr, location)
 
     def tutorial_quest(self, usrName, usrGendr, location):
-        time.sleep(txt_wait)
+        time.sleep(txtWait)
 
         mentorName = ''
-        mentorName_Plurar = ''
 
-        text = f'''
-{usrName} slowly opens {usrGendr[3]} eyes from {usrGendr[3]} hammock.
+        Typing(txtSpeed, gameText.tutorial_text_1.format(
+            usrName, usrGendr[3], usrGendr[3], usrName, usrGendr[3], usrName, usrGendr[4], usrGendr[3]))
 
-The first thing {usrName} notice
-is the warm sun on {usrGendr[3]} face,
-birds chirping faintly in the background,
-and a lukewarm breeze,
-that carries a sweet scent of primrose roses.
+        # Player obtains the ability 'LOOK'
+        func.obtains('LOOK', usrName)
+        func.cmd_tutorial('look')
+        func.sys_clear()
 
-Peacefull..
+        Typing(txtSpeed, gameText.tutorial_text_2.format(
+            usrName, location, usrName, usrGendr[0], usrGendr[3]))
+        time.sleep(txtWait)
 
-
-Afther a few moments,
-{usrName} hears the sound of a door opening.
-{usrGendr[4]} looks up and sees {usrGendr[3]} mentor standing in a doorway.
-'''
-        Typing(tspeed, text)
-
-        engine.obtains('LOOK', usrName)
-        engine.cmd_tutorial('look')
-
-        input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
-        engine.sys_clear()
-
-        text = f'''
-{usrName} looks around at the {location}
-and sees a big tree inside a grass field
-surrounded by a man-made wooden fence.
-
-There's a wooden chop-block at the end of the grassfield
-next to a stands sturdy man-made wooden log.
-
-A feeling of familiarity came over {usrName} as {usrGendr[0]} sees
-{usrGendr[3]} mentor standing in the doorway of the log.
-'''
-        Typing(tspeed, text)
-        time.sleep(txt_wait)
-
-        mentor = Mentor(mentorName, mentorName_Plurar)
+        # Player chooses Mento's name.
+        mentor = Mentor(mentorName)
         mentorName = mentor.get_name(usrName, usrGendr)
-        engine.sys_clear()
+        func.sys_clear()
 
-        text = f'''
-With a confused face, {mentorName[0]} walks up to {usrName}
-and he asks to help him find a map that he burried
-somewhere around this {location}.
+        Typing(txtSpeed, gameText.tutorial_text_3.format(
+            mentorName[0], usrName, location,
+            mentorName[0], usrName, usrName,
+            mentorName[0], mentorName, usrName))
 
-You decide to help {mentorName}.
-He places his hand on {usrName}'s forehead,
-while mumbling some kind of strange mantra.
+        # Player obtains the ability 'DIG'
+        func.obtains('DIG', usrName)
+        func.cmd_tutorial('dig')
+        func.sys_clear()
 
-While listning to the mantra, {usrName} can't help but notice,
-a strang thermic force comming of {mentorName} body.
+        Typing(txtSpeed, gameText.tutorial_text_4.format(
+            mentorName[0], usrName, usrGendr[3],
+            usrGendr[3], usrName, usrName[1],
+            usrGendr[0]))
 
-Suddenly {mentorName[1]} hand glows
-and a rainbow-colored thermic force shoots out of his hand ...
+        time.sleep(3)
+        Typing(txtSpeed, gameText.tutorial_text_5.format(
+            mentorName[0]))
 
+        time.sleep(4)
+        func.sys_clear()
 
-A warm feeling came over {usrName}.
-'''
-        Typing(tspeed, text)
+        Typing(txtSpeed, gameText.tutorial_text_6.format(
+            usrName, usrGendr[3], mentorName[0],
+            mentorName[0], usrName, usrGendr[2]))
 
-        engine.obtains('DIG', usrName)
-        engine.cmd_tutorial('dig')
+        # Player obtains the 'MAP'
+        func.obtains('MAP', usrName)
+        func.cmd_tutorial('map')
 
-        input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
-        engine.sys_clear()
-
-        text = f'''
-{mentorName} pukes from excaustion!
-But he looks happy...
-Probably beacuse you can help find his map now.\n'''
-        Typing(tspeed, text)
-        time.sleep(txt_wait)
-
-        text1 = f'''
-{usrName} puts {usrGendr[3]} hand on the ground..
-The same rainbow-colored thermic force
-shoots from {usrGendr[3]} arm through and out off his hand!\n'''
-        Typing(tspeed, text1)
-        time.sleep(txt_wait)
-
-        text2 = f'''
-{usrName} somehow opens a small black portal
-with evaporating 1's and 0's around the edges.\n'''
-        Typing(tspeed, text2)
-
-        text3 = f'''
-{usrName}'s hand went through the ground's dimension and {usrGendr[0]} felt something...\n'''
-        Typing(tspeed, text3)
-        time.sleep(txt_wait)
-
-        text4 = f'''
-It was the map {mentorName} was looking for!'''
-        Typing(tspeed, text4)
-        time.sleep(txt_wait)
-        engine.sys_clear()
-
-        text5 = f'''
-{usrName} turns around and gives the map to {usrGendr[3]} mentor.
-
-With relieve {mentorName} looks at the map
-and with a snap of his fingers the map vanishes .. !?!
-
-{mentorName} looks at {usrName} and asks {usrGendr[3]} to use the map ..
-'''
-        Typing(tspeed, text5)
-
-        engine.obtains('MAP', usrName)
-        engine.cmd_tutorial('map')
-
-        input(bcolors.FAIL + '\n:> ' + bcolors.ENDC)
-
-        first_entered = ''
+        first_entered = False
         map = Map(usrName, usrGendr, location)
         map.get_map(usrName, usrGendr, location, first_entered)
 
-        input()
-
-        engine.comming_soon()
+        func.comming_soon()
 
     def quest1(self):
         pass
@@ -575,25 +519,21 @@ class Map(Hero):
     def get_map(self, usrName, usrGendr, location, first_entered):
         ''' Holds a record of were player has been and shows it on a map '''
         self.location = location
-        self.first_entered = True
+        self.first_entered = first_entered
 
         # Create new instance to separate keys en values of dict in static 'locator' methode
-        map = Map(usrName, usrGendr, location)
-
-        # Checks to see if player location is True or False.
-        # Returns dictionary with locations as key and True as values (where player has visited.)
-        check = map.locator(location, first_entered)
+        # map = Map(usrName, usrGendr, location)
 
         # This block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
-        getkeys = map.locator(location, first_entered).keys()
-        getvalues = map.locator(location, first_entered).values()
-        getkeys_getvalues_zip = {key: value for key,
-                                 value in zip(getkeys, getvalues)}
+        getKeys = Map.locator(location, first_entered).keys()
+        getValues = Map.locator(location, first_entered).values()
+        getKeysAndValues = {key: value for key,
+                            value in zip(getKeys, getValues)}
 
         # This for loops idea is to place empty spaces were player hasn't been yet (TRUE) and appends location on place player does (FALSE) switch deze
         land_name = []
 
-        for place, first_entered in getkeys_getvalues_zip.items():
+        for place, first_entered in getKeysAndValues.items():
             if first_entered == True:
                 land_name.append(place)
             else:
@@ -631,8 +571,15 @@ class Map(Hero):
         '''
         print(usr_map)
 
+        answer = input(':> ')
+        if answer == keyboard.is_pressed('ctrl'):
+            func.sys_clear()
+        else:
+            input()
+
     @staticmethod
     def locator(location, first_entered):
+        ''' Tracks if player has visited location before '''
 
         dic_locator = {
             'Home': False,
@@ -647,7 +594,7 @@ class Map(Hero):
             'DarkLands': False
         }
 
-        # This block checks players location. If it's player first visit, changes the dict value to True
+        # Changes value to True when player first enterd a location.
         if dic_locator[location] == False:
             dic_locator[location] = True
 
