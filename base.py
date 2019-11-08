@@ -7,16 +7,15 @@ import engine as func
 import platform
 import text as gameText
 
-txtSpeed = 0.05
+txtSpeed = func.txtSpeed
 txtWait = func.txtWait
-usrNameColor = 'orange'
-usrAnswer = ('yes', 'y', 'no', 'n')
-usrGendr_Boy = ("he", "his", "him", "his",
-                "He", "His", "Him", "His")
-usrGendr_Girl = ("she", "hers", "her", "her",
-                 "She", "Hers", "Her", "Her")
 
-mentorNameColor = 'blue'
+usrNameColor = 'orange'
+usrAnswer = func.usrAnswer
+usrGendr_Boy = func.usrGendr_Boy
+usrGendr_Girl = func.usrGendr_Girl
+
+mentorNameColor = func.mentorNameColor
 
 
 class Person(object):
@@ -110,15 +109,16 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
             if usrGendr == 'boy':
                 Typing(
-                    txtSpeed, Typing.text_decor('white', gameText.createBoy, 'bold'))
+                    txtSpeed, Typing.text_decor('white',
+                                                gameText.createBoy, 'bold'))
 
                 time.sleep(txtWait)
                 func.sys_clear()
-
                 usrGendr = usrGendr_Boy
             elif usrGendr == 'girl':
                 Typing(
-                    txtSpeed, Typing.text_decor('white', gameText.createGirl, 'bold'))
+                    txtSpeed, Typing.text_decor('white',
+                                                gameText.createGirl, 'bold'))
 
                 time.sleep(txtWait)
                 func.sys_clear()
@@ -128,7 +128,6 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 Typing(txtSpeed, gameText.fAI_CC[:-1])
 
                 randomnr = random.randint(1, 3)
-                print('>>> randomnr:', randomnr)
 
                 if randomnr == 1:
                     Typing(txtSpeed, Typing.text_decor(
@@ -194,11 +193,9 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                     continue
             break
 
-        self.usrName = Typing.text_decor(usrNameColor, usrName, 'bold')
-        self.usrName_Plurar = usrName + "'s"
-        self.usrGendr = usrGendr
+        usrName_Plurar = usrName + "'s"
 
-        return [self.usrName, self.usrName_Plurar], self.usrGendr
+        return Typing.text_decor(usrNameColor, usrName, 'bold'), Typing.text_decor(usrNameColor, usrName_Plurar, 'bold'), self.usrGendr
 
     def get_backpack(self):
         '''Function to see what and how many items the player has'''
@@ -232,7 +229,7 @@ class Mentor(Person):
                 continue
             else:
                 answer = str(
-                    input((f'\n"{mentorName}"? That sounds about right.. (Y/N):\n:> ')).lower())
+                    input((f'\n"{mentorName}"? That sounds about right.. (Y/N):\n:> ')).capitalize())
                 if answer == "":
                     continue
                 elif answer.lower() in usrAnswer[:2]:
@@ -245,7 +242,7 @@ class Mentor(Person):
 
         mentorName_Plurar = mentorName + "'s"
 
-        return [Typing.text_decor(mentorNameColor, [mentorName, mentorName_Plurar], 'bold')]
+        return Typing.text_decor(mentorNameColor, mentorName, 'bold'), Typing.text_decor(mentorNameColor, mentorName_Plurar, 'bold')
 
 
 class Enemy(Person):
@@ -287,62 +284,38 @@ class Menus(object):
         self.game_name = func.game_name()
 
     def start_menu(self, location):
+        ''' The start menu with options for the player '''
         func.sys_clear()
         print(self.game_name)
-        txtSpeed = 0.005
 
-        Welcome_Menu = '''
-
-                        ############################
-                        #          Welcome         #
-                        ############################
-
-                                  - Play -
-                                  - Load -
-                                  - Help -
-
-                                  - Quit -
-
-                                  Made by:
-                               M.L. de France
-                        ############################
-        '''
-        Typing(txtSpeed, Welcome_Menu)
+        Typing(0.005, gameText.Welcome_Menu.format(
+            'Welcome', 'Play', 'Load',
+            'Help', 'Quit', 'M.L. de France'))
         func.enter_command(location)
 
     def get_help(self, location):
+        ''' The help menu with tips about the game '''
 
-        Help_Menu = '''
-
-                        ############################
-                        #         - Help -         #
-                        ############################
-                        - Type commands to do them -
-
-                                  - Play -
-                        - "play" to start the game -
-
-                                  - Load -
-                        - "load" to load your game -
-
-                                  - Quit -
-                        - "quit" to exit  the game -
-
-                                 - "back" -
-
-                      - Press "CTRL" to speed up txt -
-                        - Good luck and have fun!! -
-                        ############################
-        '''
         if location == 'Beginning':
             func.sys_clear()
             print(self.game_name)
-            txtSpeed = 0.005
-            Typing(txtSpeed, Help_Menu)
+
+            Typing(0.005, gameText.Help_Menu.format(
+                'Play', 'Load', 'Quit', "back"))
             func.enter_command(location)
         else:
-            Typing(txtSpeed, Help_Menu)
+            Typing(0.005, gameText.Help_Menu.format(
+                'Play', 'Load', 'Quit', "back"))
             func.enter_command(location)
+
+    def get_spellbook():
+        pass
+
+    def save_game():
+        pass
+
+    def load_game():
+        pass
 
 
 # class Spellbook:
@@ -385,6 +358,7 @@ class Typing(bcolors):
             self.text == []
         else:
             self.text = text
+
         self.speed = speed
         self.bcolors = bcolors
 
@@ -406,25 +380,16 @@ class Typing(bcolors):
     def text_decor(cls, color, text=None, decor=None):
         ''' This function decorates text with UNDERLINE and/or BOLD '''
 
-        if text == None:
-            text = []
-        #text = ''.join(text)
-
-        # Hier moet code komen (for loop) die per item @@@
-
         if color == 'red':
-            text = bcolors.FAIL + str(text) + bcolors.ENDC
+            text = bcolors.FAIL + text + bcolors.ENDC
         elif color == 'green':
             text = bcolors.OKGREEN + text + bcolors.ENDC
         elif color == 'blue':
-            text = bcolors.OKBLUE + str(text) + bcolors.ENDC
+            text = bcolors.OKBLUE + text + bcolors.ENDC
         elif color == 'orange':
             text = bcolors.WARNING + text + bcolors.ENDC
         else:
             text = text
-
-        if decor == None:
-            decor = []
 
         for i in decor:
             if i == 'underline':
@@ -465,8 +430,8 @@ class Quest(Hero):
 
         Typing(txtSpeed, gameText.tutorial_text_3.format(
             mentorName[0], usrName, location,
-            mentorName[0], usrName, usrName,
-            mentorName[0], mentorName, usrName))
+            mentorName[0], usrName[1], usrName,
+            mentorName[0], mentorName[1], usrName))
 
         # Player obtains the ability 'DIG'
         func.obtains('DIG', usrName)
@@ -569,13 +534,7 @@ class Map(Hero):
         Press 'ENTER' to continue
         Press 'CTRL' to continue and clear the screen
         '''
-        print(usr_map)
-
-        answer = input(':> ')
-        if answer == keyboard.is_pressed('ctrl'):
-            func.sys_clear()
-        else:
-            input()
+        return(usr_map)
 
     @staticmethod
     def locator(location, first_entered):
