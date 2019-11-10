@@ -93,7 +93,7 @@ and he asks to help him find a map that he burried
 somewhere around this {}.
 
 You decide to help {}.
-He places his hand on {}'s forehead,
+He places his hand on {} forehead,
 while mumbling some kind of strange mantra.
 
 While listning to the mantra, {} can't help but notice,
