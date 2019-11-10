@@ -10,12 +10,12 @@ import text as gameText
 txtSpeed = func.txtSpeed
 txtWait = func.txtWait
 
-usrNameColor = 'orange'
 usrAnswer = func.usrAnswer
 usrGendr_Boy = func.usrGendr_Boy
 usrGendr_Girl = func.usrGendr_Girl
 
 mentorNameColor = func.mentorNameColor
+usrNameColor = func.usrNameColor
 
 
 class Person(object):
@@ -89,12 +89,9 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
     '''This class holds information about the player's character'''
 
     def __init__(self, usrName, usrGendr, location):
-        # super().__init__(hp, mp, atk, df, magic)
-        self.usrName = ''
-        self.usrName_Plurar = ''
-        self.usrGendr = ''
-
-        self.backpack = {}  # Here's going to Inventory and stuff like that
+        self.location = location
+        self.usrName = usrName
+        self.usrGendr = usrGendr
 
     def character_creation(self):
         ''' Creates Hero's name and gender.
@@ -108,39 +105,20 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
         while True:
 
             if usrGendr == 'boy':
-                Typing(
-                    txtSpeed, Typing.text_decor('white',
-                                                gameText.createBoy, 'bold'))
-
+                Typing(txtSpeed, gameText.createBoy)
                 time.sleep(txtWait)
                 func.sys_clear()
                 usrGendr = usrGendr_Boy
+
             elif usrGendr == 'girl':
-                Typing(
-                    txtSpeed, Typing.text_decor('white',
-                                                gameText.createGirl, 'bold'))
+                Typing(txtSpeed, gameText.createGirl)
 
                 time.sleep(txtWait)
                 func.sys_clear()
-
                 usrGendr = usrGendr_Girl
-            elif usrGendr in ('gender-neutral', 'gender neutral'):
-                Typing(txtSpeed, gameText.fAI_CC[:-1])
 
-                randomnr = random.randint(1, 3)
-
-                if randomnr == 1:
-                    Typing(txtSpeed, Typing.text_decor(
-                        None, gameText.createBoy, 'bold'))
-                    time.sleep(txtWait)
-                    func.sys_clear()
-                else:
-                    Typing(txtSpeed, Typing.text_decor(
-                        None, gameText.createGirl, 'bold'))
-                    time.sleep(txtWait)
-                    func.sys_clear()
             else:
-                randomnr = random.randint(0, (len(fAI_CC) - 1) - 1)
+                randomnr = random.randint(0, (len(fAI_CC) + 1))
                 Typing(txtSpeed, fAI_CC[randomnr])
                 time.sleep(txtWait)
                 func.sys_clear()
@@ -195,7 +173,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
 
         usrName_Plurar = usrName + "'s"
 
-        return Typing.text_decor(usrNameColor, usrName, 'bold'), Typing.text_decor(usrNameColor, usrName_Plurar, 'bold'), self.usrGendr
+        return Typing.text_decor(usrNameColor, 'bold', usrName), Typing.text_decor(usrNameColor, 'bold', usrName_Plurar), usrGendr
 
     def get_backpack(self):
         '''Function to see what and how many items the player has'''
@@ -217,11 +195,11 @@ class Mentor(Person):
     def get_name(self, usrName, usrGendr):
         mentorName = str(
             input(
-                f"\n\n{usrName} just woke up and rememberd {usrGendr[3]} mentor's name..\n:> "))
+                f"\n\n{usrName[0]} just woke up and rememberd {usrGendr[3]} mentor's name..\n:> "))
 
         while True:
             if mentorName == '':
-                text = f"\nIt's been a rough nap... what was {usrName}'s mentor's name?'\n"
+                text = f"\nIt's been a rough nap... what was {usrName[1]} mentor's name?'\n"
                 Typing(txtSpeed, text)
 
                 mentorName = str(
@@ -242,7 +220,7 @@ class Mentor(Person):
 
         mentorName_Plurar = mentorName + "'s"
 
-        return Typing.text_decor(mentorNameColor, mentorName, 'bold'), Typing.text_decor(mentorNameColor, mentorName_Plurar, 'bold')
+        return [Typing.text_decor(mentorNameColor, 'bold', mentorName), Typing.text_decor(mentorNameColor, 'bold', mentorName_Plurar)]
 
 
 class Enemy(Person):
@@ -377,7 +355,7 @@ class Typing(bcolors):
         sys.stdout.flush()
 
     @classmethod
-    def text_decor(cls, color, text=None, decor=None):
+    def text_decor(cls, color, decor=None, text=None):
         ''' This function decorates text with UNDERLINE and/or BOLD '''
 
         if color == 'red':
@@ -391,12 +369,16 @@ class Typing(bcolors):
         else:
             text = text
 
-        for i in decor:
-            if i == 'underline':
-                text = bcolors.UNDERLINE + text + bcolors.ENDC
+        if decor == None:
+            decor = []
 
-            if i == 'bold':
+        if type(decor) == type([]):
+            text = bcolors.BOLD + bcolors.UNDERLINE + text
+        else:
+            if decor == 'bold':
                 text = bcolors.BOLD + text + bcolors.ENDC
+            if decor == 'underline':
+                text = bcolors.UNDERLINE + text + bcolors.ENDC
 
         return text
 
@@ -410,37 +392,36 @@ class Quest(Hero):
         time.sleep(txtWait)
 
         mentorName = ''
-
         Typing(txtSpeed, gameText.tutorial_text_1.format(
-            usrName, usrGendr[3], usrGendr[3], usrName, usrGendr[3], usrName, usrGendr[4], usrGendr[3]))
+            usrName[0], usrGendr[3], usrGendr[3], usrName[0], usrGendr[3], usrName[0], usrGendr[4], usrGendr[3]))
 
         # Player obtains the ability 'LOOK'
-        func.obtains('LOOK', usrName)
+        func.obtains('LOOK', usrName[0])
         func.cmd_tutorial('look')
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_2.format(
-            usrName, location, usrName, usrGendr[0], usrGendr[3]))
+            usrName[0], location, usrName[0], usrGendr[0], usrGendr[3]))
         time.sleep(txtWait)
 
         # Player chooses Mento's name.
         mentor = Mentor(mentorName)
-        mentorName = mentor.get_name(usrName, usrGendr)
+        mentorName = mentor.get_name(usrName[0], usrGendr)
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_3.format(
-            mentorName[0], usrName, location,
-            mentorName[0], usrName[1], usrName,
-            mentorName[0], mentorName[1], usrName))
+            mentorName[0], usrName[0], location,
+            mentorName[0], usrName[1], usrName[0],
+            mentorName[0], mentorName[1], usrName[0]))
 
         # Player obtains the ability 'DIG'
-        func.obtains('DIG', usrName)
+        func.obtains('DIG', usrName[0])
         func.cmd_tutorial('dig')
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_4.format(
-            mentorName[0], usrName, usrGendr[3],
-            usrGendr[3], usrName, usrName[1],
+            mentorName[0], usrName[0], usrGendr[3],
+            usrGendr[3], usrName[0], usrName[1],
             usrGendr[0]))
 
         time.sleep(3)
@@ -451,11 +432,11 @@ class Quest(Hero):
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_6.format(
-            usrName, usrGendr[3], mentorName[0],
-            mentorName[0], usrName, usrGendr[2]))
+            usrName[0], usrGendr[3], mentorName[0],
+            mentorName[0], usrName[0], usrGendr[2]))
 
         # Player obtains the 'MAP'
-        func.obtains('MAP', usrName)
+        func.obtains('MAP', usrName[0])
         func.cmd_tutorial('map')
 
         first_entered = False
