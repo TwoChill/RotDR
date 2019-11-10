@@ -8,8 +8,9 @@ import platform
 
 txtSpeed = 0.05
 txtWait = 0
-usrNameColor = 'white'
-mentorNameColor = 'white'
+usrNameColor = None
+mentorNameColor = None
+
 usrGendr_Boy = ("he", "his", "him", "his",
                 "He", "His", "Him", "His")
 usrGendr_Girl = ("she", "hers", "her", "her",
@@ -73,10 +74,10 @@ def cmd_tutorial(cmd):
 
 def obtains(cmd, usrName):
     ''' When HERO obtains something, a text will be displayed '''
-
+    print(usrName)
     time.sleep(txtWait)
     clss.Typing(txtSpeed, clss.Typing.text_decor(
-        'red', f'\n\t{usrName.upper()} OBTAINS {cmd}!\n', ['underline', 'bold']))
+        'red', ['bold', 'underline'], f'\n\t{usrName} OBTAINS {cmd}!\n'))
     time.sleep(txtWait)
 
 
@@ -272,10 +273,9 @@ ssssooooooo+++++++++++++sNmmmmdddmNMMMNNmmmmmmmmmmmmmmmmmmmmmmmhso+:-sNMMMMMMMMM
                            `:yNmmdyss+/-`          .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMNNMMNNmddddhhdddddddmNNMNmddyys/`                             
 
                                                                
-                                                               Thank you for playing!                                                               '''
-    clss.Typing(0.0005, [text, game_name()])
+                                                               Thank you for playing!                                                               
+                                                               '''
 
-    # Game_Name = game_name()
-    # clss.Typing(0.005, Game_Name)
+    clss.Typing(0.0009, [text, game_name()])
 
     sys.exit()
