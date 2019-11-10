@@ -9,6 +9,10 @@ import text
 
 txtSpeed = 0.05
 
+usrName = ''
+usrName_Plurar = ''
+usrGendr = ()
+
 try:
     func.sys_clear()
 
@@ -30,23 +34,19 @@ try:
     Start_Game = clss.Menus(location)
     Start_Game.start_menu(location)
 
-    # Create an instance of Hero with user input.
-    usrName = ''
-    usrGendr = ()
-
-    # Create instance of Hero with a NAME and GENDER in var PLAYER
+    # Create and holds players info
     player = clss.Hero(usrName, usrGendr, location)
-    player.character_creation()
+    usrInfo = player.character_creation()
 
-    usrGendr = player.usrGendr
-    usrName = player.usrName
+    usrName = [usrInfo[0], usrInfo[1]]
+    usrGendr = usrInfo[2]
 
     # Calls locator method to track player's location.
     location = 'Home'
     clss.Map.locator(location, True)
 
-    quest = clss.Quest(usrName, usrGendr, location)
-    quest.tutorial_quest(usrName, usrGendr, location)
+    start = clss.Quest(usrName, usrGendr, location)
+    start.tutorial_quest(usrName, usrGendr, location)
 
 except KeyboardInterrupt:
     func.quit()
