@@ -2,6 +2,8 @@ import base as clss
 import engine as func
 
 #######################################################################
+iNput = ':> '
+#######################################################################
 
 createBoy = '\n\n\t\tA Boy has been created!\n\n'
 createGirl = '\n\n\t\tA Girl has been created!\n\n'
@@ -46,7 +48,16 @@ Help_Menu = '''
                                                 ############################
 '''
 #######################################################################
+
+obtain_text = "\n\t{}{}{} obtains {}!{}"
+
 #######################################################################
+
+cmd_tutorial_txt = "\n\n# Tutorial: Use command {} #"
+cmd_tutorial_look = "\nType {} to look around your surroundings."
+cmd_tutorial_dig = "\n Type {} to open a small black portal."
+cmd_tutorial_map = "\nType {} to see were you are."
+
 #######################################################################
 #######################################################################
 #######################################################################
@@ -147,11 +158,24 @@ fAI_CC = ['\n\t\tJust think of one strong name...\n\n',
           "\n\t\t'Zolar'?, 'Matt'?, I'm just trying to help ... \n\n",
           "\n\t\tThere must be something you can think of..\n\n",
           "\n\t\tYes .. It's hard.. and forever. Sooo, take your time..\n\n",
-          "\n\t\t..... -_-", "\n\t\tI have faith you'll succeed on your next try.. ",
-          "\n\t\tIt's a thing now-a-day's.. I'll randomly pick a gender for you! ;)\n\n"]
+          "\n\t\t..... -_-\n\n",
+          "\n\t\tI have faith you'll succeed on your next try.. \n\n",
+          "\n\t\tIt's a thing now-a-day's.. I'll randomly pick a gender for you! ;)\n\n"
+          "\n\t\tLook.. If it's a gender-neutral thing.. I mean...\n\n"]
 
 #######################################################################
 
+fAI = ['\t\t\tUhmm.. I think you misspelled..',
+       "\t\t\t'{}', is kinda.. forein to me.",
+       "\t\t\tNope, I didn't get that!",
+       '\t\t\t.......... -_-',
+       '\t\t\tWe all have brainfarts sometimes ....',
+       "\t\t\tI don't think '{}' is the answer..",
+       '\t\t\tOeps, brainfart! Again please!',
+       "\t\t\tThat's just not correct.",
+       "\t\t\tI'm sorry, but I don't know what '{}' means.",
+       "\t\t\tThat's what she! said.",
+       "\t\t\t.. 'help' could be usefull .."]
 
 #######################################################################
 
