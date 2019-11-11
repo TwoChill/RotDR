@@ -118,7 +118,7 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 usrGendr = usrGendr_Girl
 
             else:
-                randomnr = random.randint(0, (len(fAI_CC) + 1))
+                randomnr = random.randint(0, (len(fAI_CC) - 1))
                 Typing(txtSpeed, fAI_CC[randomnr])
                 time.sleep(txtWait)
                 func.sys_clear()
@@ -195,7 +195,7 @@ class Mentor(Person):
     def get_name(self, usrName, usrGendr):
         mentorName = str(
             input(
-                f"\n\n{usrName[0]} just woke up and rememberd {usrGendr[3]} mentor's name..\n:> "))
+                f"\n\n{usrName} just woke up and rememberd {usrGendr[3]} mentor's name..\n:> "))
 
         while True:
             if mentorName == '':
@@ -329,7 +329,7 @@ class bcolors(object):
 class Typing(bcolors):
     ''' Game txt is being typed on screen. CTRL to increase speed '''
 
-    def __init__(self, speed, text=None):
+    def __init__(self, txtSpeed, text=None):
         self.text = text
 
         if text is None:
@@ -337,7 +337,7 @@ class Typing(bcolors):
         else:
             self.text = text
 
-        self.speed = speed
+        self.txtSpeed = txtSpeed
         self.bcolors = bcolors
 
         text = ''.join(self.text)
@@ -346,10 +346,10 @@ class Typing(bcolors):
             # This block lets player press CTRL and skip the rolling of text #
             if keyboard.is_pressed('ctrl'):
                 time.sleep(0.01)
-                speed = 0.00001
+                txtSpeed = 0.00001
             sys.stdout.write(l)
             sys.stdout.flush()
-            time.sleep(speed)
+            time.sleep(txtSpeed)
 
         sys.stdout.write('\n')
         sys.stdout.flush()
@@ -358,7 +358,9 @@ class Typing(bcolors):
     def text_decor(cls, color, decor=None, text=None):
         ''' This function decorates text with UNDERLINE and/or BOLD '''
 
-        if color == 'red':
+        if text == None:
+            text = []
+        elif color == 'red':
             text = bcolors.FAIL + text + bcolors.ENDC
         elif color == 'green':
             text = bcolors.OKGREEN + text + bcolors.ENDC
@@ -367,18 +369,21 @@ class Typing(bcolors):
         elif color == 'orange':
             text = bcolors.WARNING + text + bcolors.ENDC
         else:
-            text = text
+            text = text + bcolors.ENDC
 
         if decor == None:
-            decor = []
-
-        if type(decor) == type([]):
-            text = bcolors.BOLD + bcolors.UNDERLINE + text
+            decor == []
+        elif decor == ['bold', 'underline']:
+            for i in decor:
+                if i == 'bold':
+                    text = bcolors.BOLD + text
+                if i == 'underline':
+                    text = bcolors.BOLD + text
         else:
             if decor == 'bold':
-                text = bcolors.BOLD + text + bcolors.ENDC
-            if decor == 'underline':
-                text = bcolors.UNDERLINE + text + bcolors.ENDC
+                text = bcolors.BOLD + text
+        if decor == 'underline':
+            text = bcolors.UNDERLINE + text
 
         return text
 
@@ -396,7 +401,10 @@ class Quest(Hero):
             usrName[0], usrGendr[3], usrGendr[3], usrName[0], usrGendr[3], usrName[0], usrGendr[4], usrGendr[3]))
 
         # Player obtains the ability 'LOOK'
-        func.obtains('LOOK', usrName[0])
+        time.sleep(txtWait)
+        func.obtains('Look', usrName[0])
+        time.sleep(txtWait)
+
         func.cmd_tutorial('look')
         func.sys_clear()
 
@@ -415,7 +423,7 @@ class Quest(Hero):
             mentorName[0], mentorName[1], usrName[0]))
 
         # Player obtains the ability 'DIG'
-        func.obtains('DIG', usrName[0])
+        func.obtains('Dig', usrName[0])
         func.cmd_tutorial('dig')
         func.sys_clear()
 
@@ -436,7 +444,7 @@ class Quest(Hero):
             mentorName[0], usrName[0], usrGendr[2]))
 
         # Player obtains the 'MAP'
-        func.obtains('MAP', usrName[0])
+        func.obtains('Map', usrName[0])
         func.cmd_tutorial('map')
 
         first_entered = False
