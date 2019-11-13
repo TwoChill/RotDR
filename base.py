@@ -378,7 +378,7 @@ class Typing(bcolors):
                 if i == 'bold':
                     text = bcolors.BOLD + text
                 if i == 'underline':
-                    text = bcolors.BOLD + text
+                    text = bcolors.UNDERLINE + text
         else:
             if decor == 'bold':
                 text = bcolors.BOLD + text
@@ -402,9 +402,10 @@ class Quest(Hero):
 
         # Player obtains the ability 'LOOK'
         time.sleep(txtWait)
-        func.obtains('Look', usrName[0])
+        Typing(0.005, func.obtains('Look', usrName[0]))
         time.sleep(txtWait)
 
+        # Prints 'OBTAINS LOOK' on screen
         func.cmd_tutorial('look')
         func.sys_clear()
 
@@ -413,8 +414,8 @@ class Quest(Hero):
         time.sleep(txtWait)
 
         # Player chooses Mento's name.
-        mentor = Mentor(mentorName)
-        mentorName = mentor.get_name(usrName[0], usrGendr)
+        mentor=Mentor(mentorName)
+        mentorName=mentor.get_name(usrName[0], usrGendr)
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_3.format(
@@ -423,7 +424,11 @@ class Quest(Hero):
             mentorName[0], mentorName[1], usrName[0]))
 
         # Player obtains the ability 'DIG'
-        func.obtains('Dig', usrName[0])
+        time.sleep(txtWait)
+        Typing(0.005, func.obtains('Dig', usrName[0]))
+        time.sleep(txtWait)
+
+        # Prints 'OBTAINS DIG' on screen
         func.cmd_tutorial('dig')
         func.sys_clear()
 
@@ -444,11 +449,15 @@ class Quest(Hero):
             mentorName[0], usrName[0], usrGendr[2]))
 
         # Player obtains the 'MAP'
-        func.obtains('Map', usrName[0])
+        time.sleep(txtWait)
+        Typing(0.005, func.obtains('Map', usrName[0]))
+        time.sleep(txtWait)
+
+        # Prints 'OBTAINS MAP' on screen
         func.cmd_tutorial('map')
 
-        first_entered = False
-        map = Map(usrName, usrGendr, location)
+        first_entered=False
+        map=Map(usrName, usrGendr, location)
         map.get_map(usrName, usrGendr, location, first_entered)
 
         func.comming_soon()
@@ -472,20 +481,20 @@ class Map(Hero):
 
     def get_map(self, usrName, usrGendr, location, first_entered):
         ''' Holds a record of were player has been and shows it on a map '''
-        self.location = location
-        self.first_entered = first_entered
+        self.location=location
+        self.first_entered=first_entered
 
         # Create new instance to separate keys en values of dict in static 'locator' methode
         # map = Map(usrName, usrGendr, location)
 
         # This block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
-        getKeys = Map.locator(location, first_entered).keys()
-        getValues = Map.locator(location, first_entered).values()
-        getKeysAndValues = {key: value for key,
+        getKeys=Map.locator(location, first_entered).keys()
+        getValues=Map.locator(location, first_entered).values()
+        getKeysAndValues={key: value for key,
                             value in zip(getKeys, getValues)}
 
         # This for loops idea is to place empty spaces were player hasn't been yet (TRUE) and appends location on place player does (FALSE) switch deze
-        land_name = []
+        land_name=[]
 
         for place, first_entered in getKeysAndValues.items():
             if first_entered == True:
@@ -493,7 +502,7 @@ class Map(Hero):
             else:
                 land_name.append(' ' * len(place))
 
-        usr_map = f'''
+        usr_map=f'''
                                           -----------
                                          |           |
                          -----------     |           |
@@ -519,7 +528,7 @@ class Map(Hero):
         |           |    |           |    |           |
         |{land_name[5]}| →  |   {land_name[6]}   | →  |{land_name[7]}|
          -----------      -----------      -----------
-        
+
         Press 'ENTER' to continue
         Press 'CTRL' to continue and clear the screen
         '''
@@ -529,7 +538,7 @@ class Map(Hero):
     def locator(location, first_entered):
         ''' Tracks if player has visited location before '''
 
-        dic_locator = {
+        dic_locator={
             'Home': False,
             'Wildland': False,
             'North': False,
@@ -544,6 +553,6 @@ class Map(Hero):
 
         # Changes value to True when player first enterd a location.
         if dic_locator[location] == False:
-            dic_locator[location] = True
+            dic_locator[location]=True
 
         return dic_locator

@@ -11,6 +11,7 @@ txtSpeed = 0.05
 txtWait = 0
 usrNameColor = None
 mentorNameColor = None
+tutorialTxtColor = 'orange'
 
 usrGendr_Boy = ("he", "his", "him", "his",
                 "He", "His", "Him", "His")
@@ -47,29 +48,30 @@ def comming_soon():
 def cmd_tutorial(cmd):
     ''' Prints out an explanation on how to use commands '''
     clss.Typing(txtSpeed, clss.Typing.text_decor(
-        'red', ['bold', 'underline'], gameText.cmd_tutorial_txt.format(cmd)))
+        tutorialTxtColor, ['bold', 'underline'], gameText.cmd_tutorial_txt.format(cmd.upper())))
 
     if cmd == 'look':
         clss.Typing(txtSpeed, clss.Typing.text_decor(
-            'red', 'underline', gameText.cmd_tutorial_look.format(cmd)))
-
-    if cmd == 'dig':
+            tutorialTxtColor, 'underline', gameText.cmd_tutorial_look.format(cmd.upper())))
+    elif cmd == 'dig':
         clss.Typing(txtSpeed, clss.Typing.text_decor(
-            'red', 'underline', gameText.cmd_tutorial_dig.format(cmd)))
-
-    if cmd == 'map':
+            tutorialTxtColor, 'underline', gameText.cmd_tutorial_dig.format(cmd.upper())))
+    elif cmd == 'map':
         clss.Typing(txtSpeed, clss.Typing.text_decor(
-            'red', 'underline', gameText.cmd_tutorial_map.format(cmd)))
+            tutorialTxtColor, 'underline', gameText.cmd_tutorial_map.format(cmd.upper())))
 
-    input(clss.Typing.text_decor('red', 'bold', gameText.iNput))
+    # TESTINg: This is were we will implement enter_command
+    input(clss.Typing.text_decor(tutorialTxtColor, 'bold', gameText.iNput))
 
 
 def obtains(cmd, usrName):
     ''' When HERO obtains something, a text will be displayed '''
 
-    print('\n\t' + clss.Typing.text_decor(
-        'red', ['bold', 'underline'], gameText.obtain_text).format(
-            usrName, clss.bcolors.BOLD, clss.bcolors.FAIL, cmd, clss.bcolors.ENDC) + '\n')
+    line = clss.Typing.text_decor('red',
+                                  'bold', '=') * (len(usrName) + len(cmd) + 2)
+    return '\t' + line + '\t' + clss.Typing.text_decor(
+        'red', 'bold', gameText.obtain_text.format(
+            usrName, clss.bcolors.BOLD, clss.bcolors.FAIL, cmd, clss.bcolors.ENDC) + '\n\t' + line)
 
 
 def enter_command(location):
