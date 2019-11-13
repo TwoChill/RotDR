@@ -49,14 +49,14 @@ Help_Menu = '''
 '''
 #######################################################################
 
-obtain_text = "\n\t{}{}{} obtains {}!{}"
+obtain_text = "\n\t{}{}{} Obtains {}!{}"
 
 #######################################################################
 
-cmd_tutorial_txt = "\n\n# Tutorial: Use command {} #"
-cmd_tutorial_look = "\nType {} to look around your surroundings."
-cmd_tutorial_dig = "\n Type {} to open a small black portal."
-cmd_tutorial_map = "\nType {} to see were you are."
+cmd_tutorial_txt = "\n\n# Tutorial: Use command {} #\n"
+cmd_tutorial_look = "Type {} to look around your surroundings."
+cmd_tutorial_dig = " Type {} to open a small black portal."
+cmd_tutorial_map = "Type {} to see were you are."
 
 #######################################################################
 #######################################################################
@@ -120,7 +120,6 @@ A warm feeling came over {}.
 #######################################################################
 
 tutorial_text_4 = '''
-
 {} pukes from excaustion!
 But he looks happy...
 
