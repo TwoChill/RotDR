@@ -74,10 +74,10 @@ birds chirping faintly in the background,
 and a lukewarm breeze,
 that carries a sweet scent of primrose roses.
 
-Peacefull..
+Peaceful..
 
 
-Afther a few moments,
+After a few moments,
 {} hears the sound of a door opening.
 {} looks up and sees {} mentor standing in a doorway.
 '''
@@ -89,7 +89,7 @@ tutorial_text_2 = '''
 and sees a big tree inside a grass field
 surrounded by a man-made wooden fence.
 
-There's a wooden chop-block at the end of the grassfield
+There's a wooden chop-block at the end of the grass field
 next to a stands sturdy man-made wooden log.
 
 A feeling of familiarity came over {} as {} sees
@@ -100,15 +100,15 @@ A feeling of familiarity came over {} as {} sees
 
 tutorial_text_3 = '''
 With a confused face, {} walks up to {}
-and he asks to help him find a map that he burried
+and he asks to help him find a map that he buried
 somewhere around this {}.
 
 You decide to help {}.
 He places his hand on {} forehead,
 while mumbling some kind of strange mantra.
 
-While listning to the mantra, {} can't help but notice,
-a strang thermic force comming of {} body.
+While listening to the mantra, {} can't help but notice,
+a strang thermic force coming of {} body.
 
 Suddenly {} hand glows
 and a rainbow-colored thermic force shoots out of his hand ...
@@ -123,11 +123,11 @@ tutorial_text_4 = '''
 {} pukes from excaustion!
 But he looks happy...
 
-(Probably beacuse you can help find his map now!)
+(Probably because you can help find his map now!)
 
 {} puts {} hand on the ground..
 The same rainbow-colored thermic force
-shoots from {} arm through and out off his hand!
+shoots from {} arm through and out of his hand!
 
 {} somehow opens a small black portal
 with evaporating 1's and 0's around the edges.
@@ -136,8 +136,8 @@ with evaporating 1's and 0's around the edges.
 '''
 
 #######################################################################
-
-tutorial_text_5 = 'It was the map {} was looking for!'
+# !!! Use this techniek on OBTAIN (bcolors.FAIL and ENC with formatter) !!! #
+tutorial_text_5 = '\nIt was the map {} {}was looking for!{}'
 
 #######################################################################
 
@@ -145,7 +145,7 @@ tutorial_text_6 = '''
 {} turns around and gives the map to {} mentor.
 
 With relieve {} looks at the map
-and with a snap of his fingers the map vanishes .. !?!
+and with a snap of his fingers, the map vanishes .. !?!
 
 {} looks at {} and asks {} to use the map ..
 '''
