@@ -414,8 +414,8 @@ class Quest(Hero):
         time.sleep(txtWait)
 
         # Player chooses Mento's name.
-        mentor=Mentor(mentorName)
-        mentorName=mentor.get_name(usrName[0], usrGendr)
+        mentor = Mentor(mentorName)
+        mentorName = mentor.get_name(usrName[0], usrGendr)
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_3.format(
@@ -438,10 +438,10 @@ class Quest(Hero):
             usrGendr[0]))
 
         time.sleep(3)
-        Typing(txtSpeed, gameText.tutorial_text_5.format(
-            mentorName[0]))
+        Typing(txtSpeed, Typing.text_decor(None, 'bold', gameText.tutorial_text_5.format(
+            mentorName[0], bcolors.BOLD, bcolors.ENDC)))
 
-        time.sleep(4)
+        input()
         func.sys_clear()
 
         Typing(txtSpeed, gameText.tutorial_text_6.format(
@@ -456,9 +456,10 @@ class Quest(Hero):
         # Prints 'OBTAINS MAP' on screen
         func.cmd_tutorial('map')
 
-        first_entered=False
-        map=Map(usrName, usrGendr, location)
-        map.get_map(usrName, usrGendr, location, first_entered)
+        first_entered = False
+        map = Map(usrName, usrGendr, location)
+        print(map.get_map(usrName, usrGendr, location, first_entered))
+        input('\t\t')
 
         func.comming_soon()
 
@@ -481,20 +482,20 @@ class Map(Hero):
 
     def get_map(self, usrName, usrGendr, location, first_entered):
         ''' Holds a record of were player has been and shows it on a map '''
-        self.location=location
-        self.first_entered=first_entered
+        self.location = location
+        self.first_entered = first_entered
 
         # Create new instance to separate keys en values of dict in static 'locator' methode
         # map = Map(usrName, usrGendr, location)
 
         # This block creates a new dictionary with boolean values ​​corresponding with visited places by placer.
-        getKeys=Map.locator(location, first_entered).keys()
-        getValues=Map.locator(location, first_entered).values()
-        getKeysAndValues={key: value for key,
+        getKeys = Map.locator(location, first_entered).keys()
+        getValues = Map.locator(location, first_entered).values()
+        getKeysAndValues = {key: value for key,
                             value in zip(getKeys, getValues)}
 
         # This for loops idea is to place empty spaces were player hasn't been yet (TRUE) and appends location on place player does (FALSE) switch deze
-        land_name=[]
+        land_name = []
 
         for place, first_entered in getKeysAndValues.items():
             if first_entered == True:
@@ -502,7 +503,7 @@ class Map(Hero):
             else:
                 land_name.append(' ' * len(place))
 
-        usr_map=f'''
+        usr_map = f'''
                                           -----------
                                          |           |
                          -----------     |           |
@@ -530,15 +531,14 @@ class Map(Hero):
          -----------      -----------      -----------
 
         Press 'ENTER' to continue
-        Press 'CTRL' to continue and clear the screen
         '''
-        return(usr_map)
+        return usr_map
 
     @staticmethod
     def locator(location, first_entered):
         ''' Tracks if player has visited location before '''
 
-        dic_locator={
+        dic_locator = {
             'Home': False,
             'Wildland': False,
             'North': False,
@@ -553,6 +553,6 @@ class Map(Hero):
 
         # Changes value to True when player first enterd a location.
         if dic_locator[location] == False:
-            dic_locator[location]=True
+            dic_locator[location] = True
 
         return dic_locator
