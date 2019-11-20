@@ -1,11 +1,14 @@
+## TO SELF: BASE IS A FILE THAT IS USED BY OTHER FILES. 1 CHANGE HERE WILL REFLECT ON EVERY FILE ##
+## TIME TO READJUST ##
+
 import os
 import time
 import sys
 import random
 import keyboard  # pip install keyboard
-import engine as func
+from . import engine as func
 import platform
-import text as gameText
+from . import text as gameText
 
 txtSpeed = func.txtSpeed
 txtWait = func.txtWait
@@ -286,14 +289,14 @@ class Menus(object):
                 'Play', 'Load', 'Quit', "back"))
             func.enter_command(location)
 
-    def get_spellbook():
-        pass
+    # def get_spellbook():
+    #     pass
 
-    def save_game():
-        pass
+    # def save_game():
+    #     pass
 
-    def load_game():
-        pass
+    # def load_game():
+    #     pass
 
 
 # class Spellbook:

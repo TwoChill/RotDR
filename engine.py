@@ -2,8 +2,8 @@ import os
 import time
 import sys
 import random
-import base as clss
-import text as gameText
+from . import base as clss
+from . import text as gameText
 
 import platform
 

@@ -2,8 +2,8 @@
 
 import os
 import time
-import base as clss
-import engine as func
+from .import base as clss
+from . import engine as func
 import platform
 import text
 
