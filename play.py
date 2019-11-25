@@ -1,9 +1,8 @@
 # Play the game
 
-import os
 import time
-from .import base as clss
-from . import engine as func
+import base as clss
+import engine as func
 import platform
 import text
 

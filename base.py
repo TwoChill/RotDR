@@ -1,14 +1,12 @@
-## TO SELF: BASE IS A FILE THAT IS USED BY OTHER FILES. 1 CHANGE HERE WILL REFLECT ON EVERY FILE ##
-## TIME TO READJUST ##
+# TO SELF: BASE IS A FILE THAT IS USED BY OTHER FILES. 1 CHANGE HERE WILL REFLECT ON EVERY FILE ##
+# TIME TO READJUST ##
 
-import os
 import time
 import sys
 import random
 import keyboard  # pip install keyboard
-from . import engine as func
-import platform
-from . import text as gameText
+import engine as func
+import text as gameText
 
 txtSpeed = func.txtSpeed
 txtWait = func.txtWait
@@ -361,7 +359,7 @@ class Typing(bcolors):
     def text_decor(cls, color, decor=None, text=None):
         ''' This function decorates text with UNDERLINE and/or BOLD '''
 
-        if text == None:
+        if text is None:
             text = []
         elif color == 'red':
             text = bcolors.FAIL + text + bcolors.ENDC
@@ -374,7 +372,7 @@ class Typing(bcolors):
         else:
             text = text + bcolors.ENDC
 
-        if decor == None:
+        if decor is None:
             decor == []
         elif decor == ['bold', 'underline']:
             for i in decor:
@@ -501,7 +499,7 @@ class Map(Hero):
         land_name = []
 
         for place, first_entered in getKeysAndValues.items():
-            if first_entered == True:
+            if first_entered is True:
                 land_name.append(place)
             else:
                 land_name.append(' ' * len(place))
@@ -555,7 +553,7 @@ class Map(Hero):
         }
 
         # Changes value to True when player first enterd a location.
-        if dic_locator[location] == False:
+        if dic_locator[location] is False:
             dic_locator[location] = True
 
         return dic_locator
