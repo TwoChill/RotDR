@@ -1,5 +1,5 @@
 # TO SELF: BASE IS A FILE THAT IS USED BY OTHER FILES. 1 CHANGE HERE WILL REFLECT ON EVERY FILE ##
-# TIME TO READJUST ##
+# TIME TO RE-ADJUST ##
 
 import time
 import sys
@@ -14,6 +14,8 @@ txtWait = func.txtWait
 usrAnswer = func.usrAnswer
 usrGendr_Boy = func.usrGendr_Boy
 usrGendr_Girl = func.usrGendr_Girl
+
+fAI_CC = gameText.fAI_CC
 
 mentorNameColor = func.mentorNameColor
 usrNameColor = func.usrNameColor
@@ -86,7 +88,7 @@ class Person(object):
                   "costs:", str(spell['cost']) + ')')
 
 
-class Hero(Person):  # user **kwarg for the backpack / inventory
+class Hero(Person):  # user **kwarg for the backpack / inventory maby?
     '''This class holds information about the player's character'''
 
     def __init__(self, usrName, usrGendr, location):
@@ -98,11 +100,11 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
         ''' Creates Hero's name and gender.
         Txt in the game will adapt to the Hero's gender. '''
 
-        fAI_CC = gameText.fAI_CC
+        # Ask for user's gender.
+        Typing(txtSpeed, gameText.askGendr)
+        usrGendr = input(gameText.dTabInput).lower()
 
-        usrGendr = str(
-            input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
-
+        # What happends when gender is selected
         while True:
 
             if usrGendr == 'boy':
@@ -119,62 +121,72 @@ class Hero(Person):  # user **kwarg for the backpack / inventory
                 usrGendr = usrGendr_Girl
 
             else:
+                # Prints fAI-text when user answer is not accepted.
                 randomnr = random.randint(0, (len(fAI_CC) - 1))
-                Typing(txtSpeed, fAI_CC[randomnr])
+                Typing(txtSpeed, '\n\t\t' + fAI_CC[randomnr] + '\n\n')
                 time.sleep(txtWait)
                 func.sys_clear()
 
-                usrGendr = str(
-                    input("\n\t\tAre you a Boy or a Girl?\n\t\t:> ")).lower()
+                # Ask for user's gender again.
+                Typing(txtSpeed, gameText.askGendr)
+                usrGendr = input(gameText.dTabInput).lower()
                 continue
             break
 
-        usrName = str(
-            input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
+        # Choose character's name.
+        Typing(txtSpeed, gameText.chooseCharName)
+        usrName = input(gameText.dTabInput).capitalize()
 
         while True:
-            # len(text) is used because the list above will grow.
+            # Chooses a random line for the fake AI to respond on  a incorrect answer.
             randomnr = random.randint(0, (len(fAI_CC) - 1))
 
             if usrName == "":
-                Typing(txtSpeed, fAI_CC[randomnr])
+                Typing(txtSpeed, '\n\t\t' + fAI_CC[randomnr] + '\n\n')
                 time.sleep(txtWait)
                 func.sys_clear()
 
-                usrName = str(
-                    input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
+                # Choose character's name again.
+                Typing(txtSpeed, gameText.chooseCharName)
+                usrName = input(gameText.dTabInput).capitalize()
+
                 continue
             else:
-                answer = str(
-                    input((f'\n\t\tIs "{usrName}" correct? (Y/N):\n\t\t:> ')).lower())
+                Typing(txtSpeed, gameText.dubbleChkName.format(usrName))
+                answer = input(gameText.dTabInput).lower()
 
                 if '' == answer in usrAnswer[2:]:
-
-                    Typing(txtSpeed, fAI_CC[randomnr])
+                    Typing(txtSpeed, '\n\t\t' + fAI_CC[randomnr] + '\n\n')
                     time.sleep(txtWait)
                     func.sys_clear()
 
-                    usrName = str(
-                        input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
+                    # Choose character's name.
+                    Typing(txtSpeed, gameText.chooseCharName)
+                    usrName = input(gameText.dTabInput).capitalize()
                     continue
+
                 elif answer in usrAnswer[:2]:
                     func.sys_clear()
-                    text = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
-                    Typing(0.05, text.format(usrName))
+                    # Initialize Character
+                    Typing(0.05, gameText.initChar.format(usrName))
                     time.sleep(txtWait)
 
+                    # Activate Matrix
                     func.matrix()
                 else:
                     func.sys_clear()
-                    usrName = str(
-                        input("\n\t\tChoose your characters Name:\n\t\t:> ")).capitalize()
+
+                    # Choose character's name.
+                    Typing(txtSpeed, gameText.chooseCharName)
+                    usrName = input(gameText.dTabInput).capitalize()
                     continue
             break
 
-        usrName_Plurar = usrName + "'s"
+        usrName_Plural = usrName + "'s"
 
-        return Typing.text_decor(usrNameColor, 'bold', usrName), Typing.text_decor(usrNameColor, 'bold', usrName_Plurar), usrGendr
+        # Returns usrName, usrName_Plural and usrGender
+        return Typing.text_decor(usrNameColor, 'bold', usrName), Typing.text_decor(usrNameColor, 'bold', usrName_Plural), usrGendr
 
     def get_backpack(self):
         '''Function to see what and how many items the player has'''
@@ -194,34 +206,38 @@ class Mentor(Person):
         self.mentorName = mentorName
 
     def get_name(self, usrName, usrGendr):
-        mentorName = str(
-            input(
-                f"\n\n{usrName} just woke up and rememberd {usrGendr[3]} mentor's name..\n:> "))
+
+        # Asks for the mentor's name.
+        Typing(txtSpeed, gameText.mentorName.format(usrName, usrGendr[3]))
+        mentorName = input(gameText.tabInput).capitalize()
 
         while True:
             if mentorName == '':
-                text = f"\nIt's been a rough nap... what was {usrName[1]} mentor's name?'\n"
-                Typing(txtSpeed, text)
-
-                mentorName = str(
-                    input("\n:> ")).capitalize()
+                randomnr = random.randint(0, (len(fAI_CC) - 1))
+                Typing(txtSpeed, '\n\t' + fAI_CC[randomnr])
+                mentorName = input(gameText.tabInput).capitalize()
                 continue
             else:
-                answer = str(
-                    input((f'\n"{mentorName}"? That sounds about right.. (Y/N):\n:> ')).capitalize())
-                if answer == "":
+                # Checks if usr wants to use this name.
+                Typing(txtSpeed, gameText.dubbleChkName.format(mentorName))
+                answer = input(gameText.dTabInput)
+
+                if answer == '':
+                    randomnr = random.randint(0, (len(fAI_CC) - 1))
+                    Typing(txtSpeed, '\n\t\t' + fAI_CC[randomnr])
                     continue
                 elif answer.lower() in usrAnswer[:2]:
                     break
                 else:
-                    mentorName = str(
-                        input("\nChoose your mentor's name:\n:> ")).capitalize()
+                    Typing(txtSpeed, gameText.mentorName.format(
+                        usrName, usrGendr[3]))
+                    mentorName = input(gameText.tabInput).capitalize()
                     continue
             break
 
-        mentorName_Plurar = mentorName + "'s"
+        mentorName_Plural = mentorName + "'s"
 
-        return [Typing.text_decor(mentorNameColor, 'bold', mentorName), Typing.text_decor(mentorNameColor, 'bold', mentorName_Plurar)]
+        return [Typing.text_decor(mentorNameColor, 'bold', mentorName), Typing.text_decor(mentorNameColor, 'bold', mentorName_Plural)]
 
 
 class Enemy(Person):
@@ -244,15 +260,7 @@ class Location(object):
 
         if location == 'Beginning':
             func.sys_clear()
-
-            text = '''
-            You are about to embark on a journey of the imagination.
-                Full of everything your imagination can fill
-
-                    .. With a helping  hand offcourse ..
-
-                   .... So let's create a character! ....'''
-            Typing(0.05, text)
+            Typing(txtSpeed, gameText.openigTxt)
             time.sleep(txtWait)
             func.sys_clear()
 
@@ -267,6 +275,7 @@ class Menus(object):
         func.sys_clear()
         print(self.game_name)
 
+        # Prints the Welcome Menu
         Typing(0.005, gameText.Welcome_Menu.format(
             'Welcome', 'Play', 'Load',
             'Help', 'Quit', 'M.L. de France'))
@@ -279,6 +288,7 @@ class Menus(object):
             func.sys_clear()
             print(self.game_name)
 
+            # Prints the Help Menu
             Typing(0.005, gameText.Help_Menu.format(
                 'Play', 'Load', 'Quit', "back"))
             func.enter_command(location)
