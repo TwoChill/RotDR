@@ -1,11 +1,20 @@
 #######################################################################
-iNput = ':> '
-#######################################################################
 
+iNput = ':> '
+newLineInput = '\n:> '
+tabInput = '\t:> '
+dTabInput = '\t\t:> '
+askGendr = "\n\t\tAre you a Boy or a Girl?"
+chooseCharName = "\n\t\tChoose your characters Name:"
 createBoy = '\n\n\t\tA Boy has been created!\n\n'
 createGirl = '\n\n\t\tA Girl has been created!\n\n'
+dubbleChkName = '\n\t\tIs "{}" correct? (Y/N):'
+initChar = '\n\n\t\t{} has been created!\n\n\tInitialization: Started\n\nInitialize in:\n3 ...\n2 .. \n1 . \n'
 
 #######################################################################
+
+mentorName = "\n\n\t{} just woke up and rememberd {} mentor's name.."
+noMentorName = "\nIt's been a rough nap... what was {} mentor's name?'\n"
 
 Welcome_Menu = '''
                                                 ############################
@@ -56,6 +65,14 @@ cmd_tutorial_dig = " Type {} to open a small black portal."
 cmd_tutorial_map = "Type {} to see were you are."
 
 #######################################################################
+
+openigTxt = '''
+            You are about to embark on a journey of the imagination.
+                Full of everything your imagination can fill
+
+                    .. With a helping  hand offcourse ..
+
+                   .... So let's create a character! ....'''
 #######################################################################
 #######################################################################
 #######################################################################
@@ -148,16 +165,16 @@ and with a snap of his fingers, the map vanishes .. !?!
 '''
 #######################################################################
 
-# fake AI for Character Creation). !!DO NOT CHANGE THE LAST ITEM!!
-fAI_CC = ['\n\t\tJust think of one strong name...\n\n',
-          "\n\t\tIt's just a cleaver combination of A's -> Z's ..\n\n",
-          "\n\t\t'Zolar'?, 'Matt'?, I'm just trying to help ... \n\n",
-          "\n\t\tThere must be something you can think of..\n\n",
-          "\n\t\tYes .. It's hard.. and forever. Sooo, take your time..\n\n",
-          "\n\t\t..... -_-\n\n",
-          "\n\t\tI have faith you'll succeed on your next try.. \n\n",
-          "\n\t\tIt's a thing now-a-day's.. I'll randomly pick a gender for you! ;)\n\n"
-          "\n\t\tLook.. If it's a gender-neutral thing.. I mean...\n\n"]
+# fake AI for Character Creation. !!DO NOT CHANGE THE LAST ITEM!!
+fAI_CC = ['Just think of one strong name...',
+          "It's just a cleaver combination of A's -> Z's ..",
+          "'Zolar'?, 'Matt'?, I'm just trying to help ... ",
+          "There must be something you can think of..",
+          "Yes .. It's hard.. and forever. Sooo, take your time..",
+          "..... -_-",
+          "I have faith you'll succeed on your next try.. ",
+          # "It's a thing now-a-day's.. I'll randomly pick a gender for you! ;)",
+          "Look.. If it's a gender-neutral thing.. I mean..."]
 
 #######################################################################
 

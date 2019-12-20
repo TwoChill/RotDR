@@ -9,7 +9,7 @@ import text
 txtSpeed = 0.05
 
 usrName = ''
-usrName_Plurar = ''
+usrName_Plural = ''
 usrGendr = ()
 
 try:

@@ -7,8 +7,9 @@ import text as gameText
 
 import platform
 
-txtSpeed = 0.05
-txtWait = 0
+# TO SELF: THIS SHOULD BE IN PYTHON FILE 'BASE'.
+txtSpeed = 0.05     # Seconds
+txtWait = 0         # Seconds
 usrNameColor = None
 mentorNameColor = None
 tutorialTxtColor = 'orange'
