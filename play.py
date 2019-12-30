@@ -4,7 +4,7 @@ import time
 import base as clss
 import engine as func
 import platform
-import text
+import text as gameText
 
 txtSpeed = 0.05
 
@@ -24,7 +24,7 @@ try:
     location = 'Beginning'
 
     # Gets and prints the game logo.
-    Game_Name = func.game_name()
+    Game_Name = gameText.game_name
     clss.Typing(0.0005, Game_Name)
     time.sleep(2)
     func.sys_clear()
@@ -40,7 +40,7 @@ try:
     usrName = [usrInfo[0], usrInfo[1]]
     usrGendr = usrInfo[2]
 
-    # Calls locator method to track player's location.
+    # Calls 'locator' method to track player's location.
     location = 'Home'
     clss.Map.locator(location, True)
 
