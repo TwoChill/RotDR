@@ -268,7 +268,7 @@ class Location(object):
 class Menus(object):
     def __init__(self, location):
         self.location = location
-        self.game_name = func.game_name()
+        self.game_name = gameText.game_name
 
     def start_menu(self, location):
         ''' The start menu with options for the player '''
@@ -449,9 +449,10 @@ class Quest(Hero):
             usrGendr[0]))
 
         time.sleep(3)
-        Typing(txtSpeed, Typing.text_decor(None, 'bold', gameText.tutorial_text_5.format(
-            mentorName[0], bcolors.BOLD, bcolors.ENDC)))
+        Typing(txtSpeed, Typing.text_decor('red', 'bold', gameText.tutorial_text_5.format(
+            mentorName[0], bcolors.BOLD, bcolors.FAIL, bcolors.ENDC)))
 
+        # Waits for the player to give an input to continue the story.
         input()
         func.sys_clear()
 
